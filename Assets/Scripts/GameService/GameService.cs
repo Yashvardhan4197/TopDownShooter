@@ -21,19 +21,21 @@ public class GameService : MonoBehaviour
 
     //Views
     [SerializeField] PlayerView playerView;
+    [SerializeField] WeaponView weaponView;
 
     //Data
     [SerializeField] PlayerDataSO playerDataSO;
-
+    [SerializeField] WeaponDataSO weaponDataSO;
     //Services
     private PlayerService playerService;
-
+    private WeaponService weaponService;
     public PlayerService PlayerService { get { return playerService; } }
-
+    public WeaponService WeaponService { get { return weaponService; } }
 
 
     private void Init()
     {
-        playerService = new PlayerService(playerView,playerDataSO);   
+        playerService = new PlayerService(playerView,playerDataSO);
+        weaponService = new WeaponService(weaponView,weaponDataSO);
     }
 }
