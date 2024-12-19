@@ -19,12 +19,21 @@ public class GameService : MonoBehaviour
         }
     }
 
-    
+    //Views
+    [SerializeField] PlayerView playerView;
+
+    //Data
+    [SerializeField] PlayerDataSO playerDataSO;
+
+    //Services
+    private PlayerService playerService;
+
+    public PlayerService PlayerService { get { return playerService; } }
 
 
 
     private void Init()
     {
-        
+        playerService = new PlayerService(playerView,playerDataSO);   
     }
 }
