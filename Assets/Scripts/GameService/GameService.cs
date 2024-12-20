@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameService : MonoBehaviour
 {
@@ -31,7 +32,8 @@ public class GameService : MonoBehaviour
     private WeaponService weaponService;
     public PlayerService PlayerService { get { return playerService; } }
     public WeaponService WeaponService { get { return weaponService; } }
-
+    //ACTIONS
+    public UnityAction StartGameAction;
 
     private void Init()
     {
