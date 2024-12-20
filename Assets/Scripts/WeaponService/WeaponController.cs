@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class WeaponController
@@ -43,7 +42,7 @@ public class WeaponController
         {
             foreach(var item in spawnedWeapons)
             {
-                if(item.Key != index)
+                if(item.Key != index-1)
                 {
                     item.Value.gameObject.SetActive(false);
                 }
@@ -65,26 +64,57 @@ public class WeaponController
 
     public void Shoot()
     {
-        if (currentWeaponIndex != -1 && Time.time >= nextTimetoFire)
+        if (currentWeaponIndex != -1)
         {
-            nextTimetoFire=Time.time+(1/ weaponDataSO.Weapons[currentWeaponIndex].FireRate);
+            if (Time.time >= nextTimetoFire)
+            {
+                nextTimetoFire = Time.time + (1 / weaponDataSO.Weapons[currentWeaponIndex].FireRate);
 
-            Ray2D ray2D = new Ray2D();
-            RaycastHit2D hit2D;
-            ray2D.origin = spawnedWeapons[currentWeaponIndex].GetMuzzleTransform().position;
-            ray2D.direction= (Camera.main.ScreenToWorldPoint(Input.mousePosition) - spawnedWeapons[currentWeaponIndex].GetMuzzleTransform().position).normalized;
+                Ray2D ray2D = new Ray2D();
+                RaycastHit2D hit2D;
+                ray2D.origin = spawnedWeapons[currentWeaponIndex].GetMuzzleTransform().position;
+                ray2D.direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - spawnedWeapons[currentWeaponIndex].GetMuzzleTransform().position).normalized;
 
-            hit2D = Physics2D.Raycast(ray2D.origin, ray2D.direction, weaponDataSO.Weapons[currentWeaponIndex].MaxRange);
-            var tracer = UnityEngine.Object.Instantiate(weaponDataSO.Weapons[currentWeaponIndex].BulletTrail, ray2D.origin, Quaternion.identity);
-            tracer.AddPosition(ray2D.origin);
-            tracer.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                hit2D = Physics2D.Raycast(ray2D.origin, ray2D.direction, weaponDataSO.Weapons[currentWeaponIndex].MaxRange);
+                var tracer = UnityEngine.Object.Instantiate(weaponDataSO.Weapons[currentWeaponIndex].BulletTrail, ray2D.origin, Quaternion.identity);
+                tracer.AddPosition(ray2D.origin);
+                tracer.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            //check if DamageAble object
-            Debug.Log("Shoot");
+                //check if DamageAble object
 
+            }
+        }
 
+    }
 
+    public void FlipCurrentWeapon(float angle)
+    {
+        if (currentWeaponIndex != -1)
+        {
+            float x= MathF.Abs(spawnedWeapons[currentWeaponIndex].gameObject.transform.localScale.x);
+            float y = MathF.Abs(spawnedWeapons[currentWeaponIndex].gameObject.transform.localScale.y);
+            float z = MathF.Abs(spawnedWeapons[currentWeaponIndex].gameObject.transform.localScale.z);
+            spawnedWeapons[currentWeaponIndex].gameObject.transform.localScale = new Vector3(x, y, z);
+            Vector3 weaponScale= spawnedWeapons[currentWeaponIndex].gameObject.transform.localScale;
+            if(angle > 90||angle<-90)
+            {
+                weaponScale.y = -1f;
+            }
+            else
+            {
+                weaponScale.y = 1f;
+            }
+            spawnedWeapons[currentWeaponIndex].gameObject.transform.localScale=weaponScale;
         }
     }
+
+    public void ToggleShootAnimation(bool status)
+    {
+        if (currentWeaponIndex != -1)
+        {
+            spawnedWeapons[currentWeaponIndex].GetWeaponAnimController().SetBool("shoot", status);
+        }
+    }
+
 
 }

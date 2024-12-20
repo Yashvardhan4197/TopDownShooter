@@ -14,9 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapons:
   - weaponName: pistol
-    fireRate: 1.5
-    maxUsedBullet: 30
+    fireRate: 5
+    maxUsedBullet: 10
     maxInMagBullets: 100
     maxRange: 300
     weaponBody: {fileID: 3483416826865013854, guid: 15ef6b01c3e74224da96ad6226842d44, type: 3}
+    bulletTrail: {fileID: 2992114685435701514, guid: 44197f89f98762242829a21dd8ef7685, type: 3}
+  - weaponName: AR
+    fireRate: 3
+    maxUsedBullet: 30
+    maxInMagBullets: 80
+    maxRange: 1000
+    weaponBody: {fileID: 2762077161666349697, guid: f666f35a1d2b8cc449030c4687f4afd3, type: 3}
+    bulletTrail: {fileID: 2992114685435701514, guid: 44197f89f98762242829a21dd8ef7685, type: 3}
+  - weaponName: SMG
+    fireRate: 4
+    maxUsedBullet: 20
+    maxInMagBullets: 80
+    maxRange: 300
+    weaponBody: {fileID: 2708134692263686057, guid: 2a0a57443380f4248a31a78249fe58e8, type: 3}
     bulletTrail: {fileID: 2992114685435701514, guid: 44197f89f98762242829a21dd8ef7685, type: 3}
