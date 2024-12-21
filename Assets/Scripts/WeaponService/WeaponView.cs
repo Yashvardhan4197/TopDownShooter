@@ -64,6 +64,7 @@ public class WeaponView : MonoBehaviour
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
         transform.eulerAngles = new Vector3(0, 0, angle);
         weaponController.FlipCurrentWeapon(angle);
+        weaponController.SetPlayerDirection(angle);
     }
 
 

@@ -53,4 +53,5 @@ public class PlayerView : MonoBehaviour
     }
 
     public Rigidbody2D GetRigidbody2D() => rb2D;
+    public Animator GetAnimator() => playerAnimator;
 }

@@ -95,7 +95,7 @@ public class WeaponController
 
     public void Shoot()
     {
-        if (currentWeaponIndex != -1&&isReloading==false)
+        if (currentWeaponIndex != -1 && isReloading==false)
         {
             if (Time.time >= nextTimetoFire )
             {
@@ -189,5 +189,29 @@ public class WeaponController
         }
     }
 
+    public void SetPlayerDirection(float angle)
+    {
+        if (angle > 180)
+        {
+            angle -= 360;
+        }
+        float x= Mathf.Cos(angle*Mathf.Deg2Rad);
+        float y=Mathf.Sin(angle*Mathf.Deg2Rad);
 
+        int xDirection = 0;
+        int yDirection = 0;
+
+        if (Mathf.Abs(x) > 0.5f)
+        {
+            xDirection = x > 0 ? 1 : -1;
+        }
+
+        if (Mathf.Abs(y) > 0.5f)
+        {
+            yDirection = y > 0 ? 1 : -1;
+        }
+
+        GameService.Instance.PlayerService.GetPlayerController().SetPlayerDirection(xDirection, yDirection);
+
+    }
 }

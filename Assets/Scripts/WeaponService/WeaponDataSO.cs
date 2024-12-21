@@ -14,6 +14,7 @@ public class WeaponDataSO: ScriptableObject
         [SerializeField] string weaponName;
         [SerializeField] float fireRate;
         [SerializeField] int reloadTimeInSeconds;
+        [SerializeField] int damage;
         [SerializeField] int maxUsedBullet;
         [SerializeField] int maxInMagBullets;
         [SerializeField] int maxRange;
@@ -26,6 +27,7 @@ public class WeaponDataSO: ScriptableObject
         public int CurrentUsedBullet { get { return currentUsedBullet; } }
         public int CurrentInMagBullets { get { return currentInMagBullets; } }
         public int MaxRange { get { return maxRange; } }
+        public int Damage { get { return damage; } }
         public WeaponBody WeaponBody { get { return weaponBody; } }
         public TrailRenderer BulletTrail { get { return bulletTrail; } }
         public int ReloadTimeInSeconds { get { return reloadTimeInSeconds; } }
