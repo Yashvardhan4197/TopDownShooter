@@ -13,6 +13,7 @@ public class WeaponDataSO: ScriptableObject
         private int currentUsedBullet;
         [SerializeField] string weaponName;
         [SerializeField] float fireRate;
+        [SerializeField] int reloadTimeInSeconds;
         [SerializeField] int maxUsedBullet;
         [SerializeField] int maxInMagBullets;
         [SerializeField] int maxRange;
@@ -27,6 +28,7 @@ public class WeaponDataSO: ScriptableObject
         public int MaxRange { get { return maxRange; } }
         public WeaponBody WeaponBody { get { return weaponBody; } }
         public TrailRenderer BulletTrail { get { return bulletTrail; } }
+        public int ReloadTimeInSeconds { get { return reloadTimeInSeconds; } }
 
         public void SetCurrentUsedBullet(int currentUsedBullet)
         {
@@ -37,6 +39,7 @@ public class WeaponDataSO: ScriptableObject
         {
             this.currentInMagBullets=currentInMagBullet;
         }
+
     }
 
     [SerializeField] List<WeaponDataCollection> weapons=new List<WeaponDataCollection>();

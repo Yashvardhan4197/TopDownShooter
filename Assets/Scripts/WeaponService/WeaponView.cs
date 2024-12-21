@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 
 
@@ -16,6 +17,15 @@ public class WeaponView : MonoBehaviour
         Shoot();
         WeaponMove();
         ChooseWeapon();
+        ReloadWeapon();
+    }
+
+    private void ReloadWeapon()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            weaponController?.ReloadCurrentWeapon();
+        }
     }
 
     private void ChooseWeapon()
@@ -39,7 +49,7 @@ public class WeaponView : MonoBehaviour
         if(Input.GetMouseButton(0))
         {
             weaponController.Shoot();
-            weaponController.ToggleShootAnimation(true);
+            
         }
         else
         {
