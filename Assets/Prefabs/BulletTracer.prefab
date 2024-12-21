@@ -84,7 +84,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.38064575
+        value: 0.08898163
         inSlope: -0.5865468
         outSlope: -0.5865468
         tangentMode: 0
@@ -92,7 +92,7 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.07910192
       - serializedVersion: 3
-        time: 0.9733796
+        time: 1
         value: 0
         inSlope: 0
         outSlope: 0
@@ -136,11 +136,11 @@ TrailRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.1
+  m_MinVertexDistance: 1
   m_MaskInteraction: 0
   m_Autodestruct: 1
   m_Emitting: 1

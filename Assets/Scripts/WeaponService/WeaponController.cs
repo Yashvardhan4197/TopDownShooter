@@ -109,12 +109,15 @@ public class WeaponController
                     ray2D.direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - spawnedWeapons[currentWeaponIndex].GetMuzzleTransform().position).normalized;
 
                     hit2D = Physics2D.Raycast(ray2D.origin, ray2D.direction, weaponDataSO.Weapons[currentWeaponIndex].MaxRange);
-                    var tracer = UnityEngine.Object.Instantiate(weaponDataSO.Weapons[currentWeaponIndex].BulletTrail, ray2D.origin, Quaternion.identity);
-                    tracer.AddPosition(ray2D.origin);
-                    tracer.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    InstantiateBulletTracer(ray2D, hit2D);
                     weaponDataSO.Weapons[currentWeaponIndex].SetCurrentUsedBullet(weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet - 1);
-                    Debug.Log("current Bullets: " + weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet);
                     //check if DamageAble object
+                    IDamageAble damageAbleItem = hit2D.transform?.GetComponent<IDamageAble>();
+
+                    if(damageAbleItem != null )
+                    {
+                        damageAbleItem.TakeDamage(weaponDataSO.Weapons[currentWeaponIndex].Damage);
+                    }
                     ToggleShootAnimation(true);
                 }
                 else
@@ -128,6 +131,23 @@ public class WeaponController
         }
 
     }
+
+    private void InstantiateBulletTracer(Ray2D ray2D, RaycastHit2D hit2D)
+    {
+        var tracer = UnityEngine.Object.Instantiate(weaponDataSO.Weapons[currentWeaponIndex].BulletTrail, ray2D.origin, Quaternion.identity);
+        tracer.AddPosition(ray2D.origin);
+        Vector2 targetPos = Vector2.zero;
+        if(hit2D.transform!=null)
+        {
+            targetPos = hit2D.point;
+        }
+        else
+        {
+            targetPos=ray2D.origin+ray2D.direction*weaponDataSO.Weapons[currentWeaponIndex].MaxRange;
+        }
+        tracer.transform.position = targetPos;
+    }
+
 
     public void ReloadCurrentWeapon()
     {
