@@ -117,6 +117,7 @@ public class WeaponController
                     if(damageAbleItem != null )
                     {
                         damageAbleItem.TakeDamage(weaponDataSO.Weapons[currentWeaponIndex].Damage);
+                        Debug.Log("Attacked");
                     }
                     ToggleShootAnimation(true);
                 }

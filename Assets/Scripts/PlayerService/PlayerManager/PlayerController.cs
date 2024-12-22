@@ -5,7 +5,7 @@ public class PlayerController
 {
     private PlayerView playerView;
     private PlayerDataSO playerData;
-
+    private float currentHealth;
 
     public PlayerController(PlayerView playerView,PlayerDataSO playerData)
     {
@@ -18,6 +18,7 @@ public class PlayerController
     {
         playerView.GetAnimator().SetFloat("X", 0);
         playerView.GetAnimator().SetFloat ("Y", 0);
+        currentHealth = playerData.Health;
     }
 
 
@@ -30,6 +31,21 @@ public class PlayerController
     {
         playerView.GetAnimator().SetFloat("X", x);
         playerView.GetAnimator().SetFloat("Y", y);
+    }
+
+    public Transform GetPlayerTransform()
+    {
+        return playerView.transform;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            //Restart Section Player DEAD
+            Debug.Log("Player Dead");
+        }
     }
 
 }

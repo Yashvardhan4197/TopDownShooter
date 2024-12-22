@@ -23,7 +23,6 @@ public class GameService : MonoBehaviour
     //Views
     [SerializeField] PlayerView playerView;
     [SerializeField] WeaponView weaponView;
-    [SerializeField] EnemyService enemyService;
     //Data
     [SerializeField] PlayerDataSO playerDataSO;
     [SerializeField] WeaponDataSO weaponDataSO;

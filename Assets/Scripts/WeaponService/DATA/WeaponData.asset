@@ -16,7 +16,7 @@ MonoBehaviour:
   - weaponName: pistol
     fireRate: 5
     reloadTimeInSeconds: 3
-    damage: 5
+    damage: 25
     maxUsedBullet: 10
     maxInMagBullets: 30
     maxRange: 3
@@ -25,7 +25,7 @@ MonoBehaviour:
   - weaponName: AR
     fireRate: 3
     reloadTimeInSeconds: 5
-    damage: 30
+    damage: 50
     maxUsedBullet: 30
     maxInMagBullets: 80
     maxRange: 5
@@ -34,7 +34,7 @@ MonoBehaviour:
   - weaponName: SMG
     fireRate: 4
     reloadTimeInSeconds: 4
-    damage: 20
+    damage: 80
     maxUsedBullet: 20
     maxInMagBullets: 80
     maxRange: 4

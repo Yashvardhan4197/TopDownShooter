@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acb7e7278bb52384d854c7988803573b, type: 3}
+  m_Name: EnemyData
+  m_EditorClassIdentifier: 
+  enemyCollections:
+  - health: 100
+    damage: 10
+    movementSpeed: 0.5
+    attackDelay: 2
+    animatorController: {fileID: 9100000, guid: 3bc360832db7fc745afca65f4282fb89, type: 2}
+  - health: 50
+    damage: 5
+    movementSpeed: 0.2
+    attackDelay: 1
+    animatorController: {fileID: 9100000, guid: afb41ceaa8784f24d855ac2a027f0768, type: 2}
