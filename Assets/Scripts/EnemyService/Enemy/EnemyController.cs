@@ -36,6 +36,7 @@ public class EnemyController
         RandomizeEnemy();
         health = enemyDataSO.EnemyCollections[currentSetEnemy].Health;
         enemyView.GetAnimator().SetBool("isDead", isDead);
+        enemyView.GetCircleCollider().radius = enemyDataSO.EnemyCollections[currentSetEnemy].AttackRadius;
     }
 
     private void RandomizeEnemy()
@@ -105,10 +106,24 @@ public class EnemyController
     {
         if(isAttacking==true&&isDead==false)
         {
-            if(Time.time > nextTimeToAttack)
+            if (enemyDataSO.EnemyCollections[currentSetEnemy].EnemyType != EnemyType.BEE)
             {
-                nextTimeToAttack= Time.time+enemyDataSO.EnemyCollections[currentSetEnemy].AttackDelay;
-                GameService.Instance.PlayerService.GetPlayerController().TakeDamage(enemyDataSO.EnemyCollections[currentSetEnemy].Damage);
+
+                if (Time.time > nextTimeToAttack)
+                {
+                    nextTimeToAttack = Time.time + enemyDataSO.EnemyCollections[currentSetEnemy].AttackDelay;
+                    GameService.Instance.PlayerService.GetPlayerController().TakeDamage(enemyDataSO.EnemyCollections[currentSetEnemy].Damage);
+                }
+            }else if(enemyDataSO.EnemyCollections[currentSetEnemy].EnemyType == EnemyType.BEE)
+            {
+                if (Time.time > nextTimeToAttack)
+                {
+                    nextTimeToAttack = Time.time + enemyDataSO.EnemyCollections[currentSetEnemy].AttackDelay;
+                    EnemyProjectileView newEnemyProjectile = GameService.Instance.EnemyProjectilePool.GetPooledItem();
+                    newEnemyProjectile.SetDamage(enemyDataSO.EnemyCollections[(currentSetEnemy)].Damage);
+                    newEnemyProjectile.SetTransformPosition(enemyView.transform.position,GameService.Instance.PlayerService.GetPlayerController().GetPlayerTransform().position);
+                    newEnemyProjectile.gameObject.SetActive(true);
+                }
             }
         }
     }

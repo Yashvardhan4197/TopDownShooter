@@ -107,14 +107,14 @@ public class WeaponController
                     RaycastHit2D hit2D;
                     ray2D.origin = spawnedWeapons[currentWeaponIndex].GetMuzzleTransform().position;
                     ray2D.direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - spawnedWeapons[currentWeaponIndex].GetMuzzleTransform().position).normalized;
-
-                    hit2D = Physics2D.Raycast(ray2D.origin, ray2D.direction, weaponDataSO.Weapons[currentWeaponIndex].MaxRange);
+                    int layerMask = ~LayerMask.GetMask("EnemyTrigger");
+                    hit2D = Physics2D.Raycast(ray2D.origin, ray2D.direction, weaponDataSO.Weapons[currentWeaponIndex].MaxRange,layerMask);
                     InstantiateBulletTracer(ray2D, hit2D);
                     weaponDataSO.Weapons[currentWeaponIndex].SetCurrentUsedBullet(weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet - 1);
                     //check if DamageAble object
                     IDamageAble damageAbleItem = hit2D.transform?.GetComponent<IDamageAble>();
 
-                    if(damageAbleItem != null )
+                    if (damageAbleItem != null)
                     {
                         damageAbleItem.TakeDamage(weaponDataSO.Weapons[currentWeaponIndex].Damage);
                         Debug.Log("Attacked");

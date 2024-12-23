@@ -13,12 +13,16 @@ public class EnemyDataSO:ScriptableObject
         [SerializeField] float damage;
         [SerializeField] float movementSpeed;
         [SerializeField] float attackDelay;
+        [SerializeField] EnemyType enemyType;
         [SerializeField] AnimatorController animatorController;
+        [SerializeField] float attackRadius;
         public float Health { get { return health; } }
         public float Damage { get { return damage; } }
         public float AttackDelay { get { return attackDelay; } }
         public float MovementSpeed { get { return movementSpeed; } }
         public AnimatorController AnimatorController { get { return animatorController; } }
+        public EnemyType EnemyType { get { return enemyType; } }
+        public float AttackRadius {  get { return attackRadius; } }
     }
 
     [SerializeField] List<EnemyCollection> enemyCollections=new List<EnemyCollection>();

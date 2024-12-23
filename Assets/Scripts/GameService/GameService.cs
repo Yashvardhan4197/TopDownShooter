@@ -23,6 +23,7 @@ public class GameService : MonoBehaviour
     //Views
     [SerializeField] PlayerView playerView;
     [SerializeField] WeaponView weaponView;
+    [SerializeField] EnemyProjectileView enemyProjectilePrefab;
     //Data
     [SerializeField] PlayerDataSO playerDataSO;
     [SerializeField] WeaponDataSO weaponDataSO;
@@ -33,10 +34,13 @@ public class GameService : MonoBehaviour
     public WeaponService WeaponService { get { return weaponService; } }
     //ACTIONS
     public UnityAction StartGameAction;
-
+    //Public Pools
+    private EnemyProjectilePool enemyProjectilePool;   
+    public EnemyProjectilePool EnemyProjectilePool { get { return enemyProjectilePool; } }
     private void Init()
     {
         playerService = new PlayerService(playerView,playerDataSO);
         weaponService = new WeaponService(weaponView,weaponDataSO);
+        enemyProjectilePool = new EnemyProjectilePool(enemyProjectilePrefab);
     }
 }

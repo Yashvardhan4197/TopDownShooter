@@ -8,7 +8,7 @@ public class EnemyView : MonoBehaviour,IDamageAble
 {
     private EnemyController enemyController;
     [SerializeField] Animator enemyAnimator;
-
+    [SerializeField] CircleCollider2D circleCollider;
     public void SetController(EnemyController enemyController)
     {
         this.enemyController = enemyController;
@@ -62,4 +62,7 @@ public class EnemyView : MonoBehaviour,IDamageAble
     {
         enemyController?.OnEnemyDestroyed();
     }
+
+    public CircleCollider2D GetCircleCollider()=>circleCollider;
+
 }
