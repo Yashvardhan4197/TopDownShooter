@@ -98,6 +98,7 @@ public class EnemyController
         enemyPool.ReturnToPool(this);
         isAttacking=false;
         isDead=false;
+        //GetPickUp-Spawn
     }
 
     public void AttackPlayer()

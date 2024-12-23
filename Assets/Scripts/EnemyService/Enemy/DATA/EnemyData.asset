@@ -20,6 +20,11 @@ MonoBehaviour:
     animatorController: {fileID: 9100000, guid: 3bc360832db7fc745afca65f4282fb89, type: 2}
   - health: 50
     damage: 5
-    movementSpeed: 0.2
+    movementSpeed: 0.7
     attackDelay: 1
     animatorController: {fileID: 9100000, guid: afb41ceaa8784f24d855ac2a027f0768, type: 2}
+  - health: 25
+    damage: 15
+    movementSpeed: 0.8
+    attackDelay: 1
+    animatorController: {fileID: 9100000, guid: 010e26ddc290b1342800b8d0733f33a7, type: 2}
