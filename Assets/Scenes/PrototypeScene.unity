@@ -267,7 +267,7 @@ MonoBehaviour:
   playerDataSO: {fileID: 11400000, guid: 816bd4f32b0bf8e47b57e2db0736715c, type: 2}
   weaponDataSO: {fileID: 11400000, guid: c295830dd480021479e87c79d76676e2, type: 2}
   pickupDataSO: {fileID: 11400000, guid: 4efd2cb0406a316479e52f1bb935bae4, type: 2}
-  pickupProbabilityRate: 50
+  pickupProbabilityRate: 25
 --- !u!4 &618774868
 Transform:
   m_ObjectHideFlags: 0

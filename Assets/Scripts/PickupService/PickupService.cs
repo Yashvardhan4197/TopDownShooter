@@ -20,7 +20,6 @@ public class PickupService
             PickupController pickup = pickupPool.GetPooledItem();
             pickup.InitializePickup(spawnPosition);
         }
-
     }
 
     public void ReturnToPool(PickupController pickupController)

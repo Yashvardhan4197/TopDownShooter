@@ -42,7 +42,13 @@ public class PickupPool
         }
     }
 
-
+    public void OnGameStart()
+    {
+        foreach(var item in pooledItems)
+        {
+            item.pickupController.ReturnPickup();
+        }
+    }
     public class PooledItem
     {
         public PickupController pickupController;

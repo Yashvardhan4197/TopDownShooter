@@ -25,3 +25,9 @@ MonoBehaviour:
     activatedTimer: 0
     ammoBoost: 30
     destructTime: 8
+  - pickupType: 1
+    pickupAnimator: {fileID: 9100000, guid: a946f21ef99961c428fc571d014eecf9, type: 2}
+    healthBoost: 0
+    activatedTimer: 6
+    ammoBoost: 0
+    destructTime: 8
