@@ -14,7 +14,8 @@ public class EnemyController
     private bool isDead;
     private Vector3 randomMovementOffset;
     private int currentSetEnemy;
-    public EnemyController(EnemyView enemyView,EnemyDataSO enemyDataSO,Transform playerTransform,Transform EnemyContainerParent,EnemyPool enemyPool)
+    private EnemyService enemyService;
+    public EnemyController(EnemyView enemyView,EnemyDataSO enemyDataSO,Transform playerTransform,Transform EnemyContainerParent,EnemyPool enemyPool,EnemyService enemyService)
     {
         this.enemyView=Object.Instantiate(enemyView);
         this.enemyView.transform.SetParent(EnemyContainerParent);
@@ -23,6 +24,7 @@ public class EnemyController
         this.enemyDataSO=enemyDataSO;
         this.enemyPool= enemyPool;
         currentSetEnemy = -1;
+        this.enemyService= enemyService;
     }
 
 
@@ -154,6 +156,7 @@ public class EnemyController
                 Debug.Log("enemy dead");
                 enemyView.GetAnimator().SetBool("isDead", true);
                 enemyView.OnDeathAnimationStart();
+                enemyService.ReduceSpawnedEnemyCount();
             }
             isDead = true;
             

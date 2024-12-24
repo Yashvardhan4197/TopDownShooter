@@ -35,7 +35,7 @@ public class PlayerController
 
     public Transform GetPlayerTransform()
     {
-        return playerView.transform;
+        return playerView?.transform;
     }
 
     public void TakeDamage(float damage)

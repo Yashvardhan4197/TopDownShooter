@@ -8,13 +8,15 @@ public class EnemyPool
     private EnemyDataSO enemyDataSO;
     private Transform enemyContainerParent;
     private Transform playerTransform;
+    private EnemyService enemyService;
     private List<PooledItem> pooledItems=new List<PooledItem>();
-    public EnemyPool(EnemyView enemyPrefab, EnemyDataSO enemyDataSO, Transform enemyContainerParent, Transform playerTransform)
+    public EnemyPool(EnemyView enemyPrefab, EnemyDataSO enemyDataSO, Transform enemyContainerParent, Transform playerTransform,EnemyService enemyService)
     {
         this.enemyPrefab = enemyPrefab;
         this.enemyDataSO = enemyDataSO;
         this.enemyContainerParent = enemyContainerParent;
         this.playerTransform = playerTransform;
+        this.enemyService = enemyService;
     }
 
     public EnemyController GetPooledItem()
@@ -31,7 +33,7 @@ public class EnemyPool
     private EnemyController CreatePooledItem()
     {
         PooledItem item= new PooledItem();
-        item.enemyController=new EnemyController(enemyPrefab,enemyDataSO,playerTransform,enemyContainerParent,this);
+        item.enemyController=new EnemyController(enemyPrefab,enemyDataSO,playerTransform,enemyContainerParent,this,enemyService);
         item.isUsed = true;
         pooledItems.Add(item);
         return item.enemyController;

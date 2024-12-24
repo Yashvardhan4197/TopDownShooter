@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class EnemyService : MonoBehaviour
 {
@@ -11,16 +12,23 @@ public class EnemyService : MonoBehaviour
     [SerializeField] EnemyView enemyPrefab;
     [SerializeField] Transform enemyContainerParent;
     [SerializeField] EnemyDataSO enemyDataSO;
+    [SerializeField] GameObject[] DoorCollection;
     private EnemyPool enemyPool;
     private bool isSpawning;
     private float timer;
     public List<EnemySpwanPointData> EnemySpwanPointDatas {  get { return enemySpwanPointDatas; } }
-
+    private int totalEnemies;
 
     private async void Awake()
     {
         await Task.Delay(2*1000);
-        enemyPool = new EnemyPool(enemyPrefab, enemyDataSO, enemyContainerParent,GameService.Instance.PlayerService.GetPlayerController().GetPlayerTransform());
+        enemyPool = new EnemyPool(enemyPrefab, enemyDataSO, enemyContainerParent,GameService.Instance.PlayerService.GetPlayerController().GetPlayerTransform(),this);
+    }
+
+    private void Start()
+    {
+        //change later
+        OnGameStart();
     }
 
     public void OnGameStart()
@@ -28,13 +36,17 @@ public class EnemyService : MonoBehaviour
         isSpawning = false;
         spawnTrigger.isTrigger = true;
         timer = 0f;
+        totalEnemies = 0;
+        SetSpawnCount();
+        OpenAllDoors();
     }
 
-    public void SetSpawnCount(int spawnCount)
+    public void SetSpawnCount()
     {
         for (int i = 0;i<enemySpwanPointDatas.Count;i++) 
         {
-            enemySpwanPointDatas[i].SpawnCount = spawnCount;
+            enemySpwanPointDatas[i].SetCurrentlySpawnCount(enemySpwanPointDatas[i].totalSpawnCount);
+            totalEnemies += enemySpwanPointDatas[i].totalSpawnCount;
         }
     }
 
@@ -51,6 +63,7 @@ public class EnemyService : MonoBehaviour
                     timer = 0f;
                 }
             }
+
         }
     }
 
@@ -59,12 +72,12 @@ public class EnemyService : MonoBehaviour
         //Instantiate enemy prefabs from each position
         for (int i = 0; i < enemySpwanPointDatas.Count; i++)
         {
-            if (enemySpwanPointDatas[i].SpawnCount > 0)
+            if (enemySpwanPointDatas[i].CurrentlySpawnCount > 0)
             {
                 EnemyController newEnemy = enemyPool.GetPooledItem();
                 newEnemy.SetSpawnPosition(enemySpwanPointDatas[i].SpawnPosition.position);
                 newEnemy.ActivateView();
-                enemySpwanPointDatas[i].SpawnCount--;
+                enemySpwanPointDatas[i].SetCurrentlySpawnCount(enemySpwanPointDatas[i].CurrentlySpawnCount - 1);
                 Debug.Log("Enemy Spawned");
             }
         }
@@ -72,19 +85,61 @@ public class EnemyService : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        isSpawning = true;
+        if (totalEnemies > 0)
+        {
+            isSpawning = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        spawnTrigger.isTrigger = false;
+        if(totalEnemies > 0 && isSpawning==true)
+        {
+            CloseAllDoors();
+        }
+        //spawnTrigger.isTrigger = false;
+    }
+
+    public void ReduceSpawnedEnemyCount()
+    {
+        totalEnemies--;
+        if(totalEnemies<=0)
+        {
+            isSpawning = false;
+            OpenAllDoors();
+        }
+    }
+
+    private void OpenAllDoors()
+    {
+        foreach(var item in DoorCollection)
+        {
+            item.gameObject.SetActive(false);
+        }
+    }
+
+    private void CloseAllDoors()
+    {
+        foreach (var item in DoorCollection)
+        {
+            item.gameObject.SetActive(true);
+        }
     }
 
     [Serializable]
     public class EnemySpwanPointData
     {
-        public int SpawnCount;
+        private int currentlySpawnCount;
+        public int totalSpawnCount;
         public Transform SpawnPosition;
+
+        public void SetCurrentlySpawnCount(int count)
+        {
+            currentlySpawnCount = count;
+        }
+
+        public int CurrentlySpawnCount { get { return currentlySpawnCount; } }
+
     }
 
 

@@ -22,6 +22,12 @@ public class PickupService
         }
     }
 
+    public void SpawnIndividualPickUp(Vector3 spawnPosition,PickupType pickupType)
+    {
+        PickupController pickup=pickupPool.GetPooledItem();
+        pickup.InitializeIsolatedPickup(spawnPosition, pickupType);
+    }
+
     public void ReturnToPool(PickupController pickupController)
     {
         pickupPool.ReturnToPool(pickupController);
