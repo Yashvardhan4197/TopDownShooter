@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90c5b55ae2c10314eac9156a36c02722, type: 3}
+  m_Name: PickupData
+  m_EditorClassIdentifier: 
+  pickupCollection:
+  - pickupType: 0
+    pickupAnimator: {fileID: 9100000, guid: 0a5570dd43964b74abc4787428d08f84, type: 2}
+    healthBoost: 30
+    activatedTimer: 0
+    ammoBoost: 0
+    destructTime: 8
+  - pickupType: 2
+    pickupAnimator: {fileID: 9100000, guid: f8682b36032529342b522065d12c8848, type: 2}
+    healthBoost: 0
+    activatedTimer: 0
+    ammoBoost: 30
+    destructTime: 8

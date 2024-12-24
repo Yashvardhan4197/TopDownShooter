@@ -262,8 +262,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerView: {fileID: 894797056}
   weaponView: {fileID: 2082705566}
+  enemyProjectilePrefab: {fileID: 5465087169972384433, guid: 59a4f151572b25b42b5435b11910b3a5, type: 3}
+  pickupPrefab: {fileID: 4971596406604844148, guid: f99ab93b6f213f34fbde3947f8cc8e6d, type: 3}
   playerDataSO: {fileID: 11400000, guid: 816bd4f32b0bf8e47b57e2db0736715c, type: 2}
   weaponDataSO: {fileID: 11400000, guid: c295830dd480021479e87c79d76676e2, type: 2}
+  pickupDataSO: {fileID: 11400000, guid: 4efd2cb0406a316479e52f1bb935bae4, type: 2}
+  pickupProbabilityRate: 50
 --- !u!4 &618774868
 Transform:
   m_ObjectHideFlags: 0

@@ -100,6 +100,7 @@ public class EnemyController
         isAttacking=false;
         isDead=false;
         //GetPickUp-Spawn
+        GameService.Instance.PickupService.SpawnPickUp(enemyView.transform.position);
     }
 
     public void AttackPlayer()

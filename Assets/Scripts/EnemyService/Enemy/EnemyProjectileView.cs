@@ -8,10 +8,7 @@ public class EnemyProjectileView: MonoBehaviour
     private Vector2 direction;
     private float damage;
     private Vector3 lastPlayerPos;
-    private void Start()
-    {
 
-    }
 
     public void SetDamage(float damage)
     {
