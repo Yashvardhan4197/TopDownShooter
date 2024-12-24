@@ -100,7 +100,6 @@ public class EnemyController
         isAttacking=false;
         isDead=false;
         //GetPickUp-Spawn
-        GameService.Instance.PickupService.SpawnPickUp(enemyView.transform.position);
     }
 
     public void AttackPlayer()
@@ -150,13 +149,22 @@ public class EnemyController
         health -= damage;
         if(health <= 0f)
         {
+            if (isDead == false)
+            {
+                Debug.Log("enemy dead");
+                enemyView.GetAnimator().SetBool("isDead", true);
+                enemyView.OnDeathAnimationStart();
+            }
             isDead = true;
-            enemyView.GetAnimator().SetBool("isDead", isDead);
-            enemyView.OnDeathAnimationStart();
+            
         }
         //OnEnemyDestroyed();
-        Debug.Log("enemy dead");
+        
         
     }
 
+    public void SpawnPickup()
+    {
+        GameService.Instance.PickupService.SpawnPickUp(enemyView.transform.position);
+    }
 }

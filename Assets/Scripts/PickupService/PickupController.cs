@@ -29,6 +29,24 @@ public class PickupController
         CheckDestructCoroutine();
     }
 
+    public void InitializeIsolatedPickup(Vector3 position, PickupType pickupType)
+    {
+        for (int i = 0;i<pickupDataSO.PickupCollections.Count;i++)
+        {
+            if(pickupType==pickupDataSO.PickupCollections[i].PickupType)
+            {
+                currentEnemyTypeIndex = i;
+                break;
+            }
+        }
+        pickupView.GetAnimator().runtimeAnimatorController = pickupDataSO.PickupCollections[currentEnemyTypeIndex].PickupAnimator;
+        destructionTimer = pickupDataSO.PickupCollections[currentEnemyTypeIndex].DestructTime;
+        pickupView.gameObject.SetActive(true);
+        pickupView.transform.position = position;
+
+    }
+
+
     private void CheckDestructCoroutine()
     {
         if (destructionCoroutine != null)

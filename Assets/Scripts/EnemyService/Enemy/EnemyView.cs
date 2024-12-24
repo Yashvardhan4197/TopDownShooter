@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using System.Threading.Tasks;
 using UnityEditor.Animations;
 using UnityEngine;
@@ -61,6 +60,7 @@ public class EnemyView : MonoBehaviour,IDamageAble
     private void OnEnemyDeathAnimationComplete()
     {
         enemyController?.OnEnemyDestroyed();
+        enemyController?.SpawnPickup();
     }
 
     public CircleCollider2D GetCircleCollider()=>circleCollider;
