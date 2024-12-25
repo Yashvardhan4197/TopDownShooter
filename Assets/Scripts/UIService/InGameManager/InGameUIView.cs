@@ -27,21 +27,25 @@ public class InGameUIView : MonoBehaviour
 
     private void OnExitToLobbyButtonClicked()
     {
-
+        inGameUIController.ExitToLobby();
     }
 
     private void OnRestartButtonClicked()
     {
-
+        inGameUIController.RestartGame();
     }
 
     private void OnResumeGameButtonClicked()
     {
-
+        inGameUIController.ResumeGame();
     }
 
     public void SetController(InGameUIController inGameUIController)
     {
         this.inGameUIController= inGameUIController;
     }
+
+
+    public GameObject GetPauseMenu() => PauseMenuPopUpGB;
+
 }

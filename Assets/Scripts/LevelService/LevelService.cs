@@ -9,6 +9,16 @@ public class LevelService
         currentLevel = 0;
     }
 
+    public void ReloadLevel()
+    {
+        if(currentLevel != 0) 
+        {
+            SceneManager.UnloadSceneAsync(SceneManager.GetSceneByBuildIndex(currentLevel));
+            SceneManager.LoadScene(currentLevel, LoadSceneMode.Additive);
+        }
+    }
+
+
     public void LoadLevel(int levelNumber)
     {
         if (currentLevel != 0)
@@ -38,7 +48,7 @@ public class LevelService
     {
         SceneManager.UnloadSceneAsync(SceneManager.GetSceneByBuildIndex(currentLevel));
         currentLevel = 0;
-        SceneManager.LoadScene(currentLevel, LoadSceneMode.Additive);
+        //SceneManager.LoadScene(currentLevel, LoadSceneMode.Additive);
     }
 
 }

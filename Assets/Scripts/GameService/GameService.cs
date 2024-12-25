@@ -25,6 +25,7 @@ public class GameService : MonoBehaviour
     [SerializeField] WeaponView weaponView;
     [SerializeField] LobbyView lobbyView;
     [SerializeField] LevelUIView levelUIView;
+    [SerializeField] InGameUIView inGameUIView; 
     [SerializeField] EnemyProjectileView enemyProjectilePrefab;
     [SerializeField] PickupView pickupPrefab;
     //Data
@@ -55,7 +56,7 @@ public class GameService : MonoBehaviour
         weaponService = new WeaponService(weaponView,weaponDataSO);
         enemyProjectilePool = new EnemyProjectilePool(enemyProjectilePrefab);
         pickupService = new PickupService(pickupDataSO, pickupPrefab, pickupProbabilityRate);
-        uIService = new UIService(lobbyView,levelUIView);
+        uIService = new UIService(lobbyView,levelUIView,inGameUIView);
         levelService = new LevelService();
         uIService.GetLobbyController().OpenLobby();
     }

@@ -49,4 +49,8 @@ public class PlayerController
         }
     }
 
+    public void TogglePause()
+    {
+        GameService.Instance.UIService.GetInGameUIController().TogglePause();
+    }
 }

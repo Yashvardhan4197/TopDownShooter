@@ -26,6 +26,15 @@ public class PlayerView : MonoBehaviour
         movement.y = Input.GetAxis("Vertical");
         movement = movement.normalized;
         SetAnimation(movement);
+        TogglePause();
+    }
+
+    private void TogglePause()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            playerController.TogglePause();
+        }
     }
 
     private void SetAnimation(Vector2 movement)
