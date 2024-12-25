@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class EnemyService : MonoBehaviour
 {
-    [SerializeField] List<EnemySpwanPointData> enemySpwanPointDatas=new List<EnemySpwanPointData>();
+    [SerializeField] List<EnemySpwanPointData> enemySpwanPointDatas = new List<EnemySpwanPointData>();
     [SerializeField] BoxCollider2D spawnTrigger;
     [SerializeField] int spawnTime;
     [SerializeField] EnemyView enemyPrefab;
@@ -16,19 +15,20 @@ public class EnemyService : MonoBehaviour
     private EnemyPool enemyPool;
     private bool isSpawning;
     private float timer;
-    public List<EnemySpwanPointData> EnemySpwanPointDatas {  get { return enemySpwanPointDatas; } }
+    public List<EnemySpwanPointData> EnemySpwanPointDatas { get { return enemySpwanPointDatas; } }
     private int totalEnemies;
-
-    private async void Awake()
-    {
-        await Task.Delay(2*1000);
-        enemyPool = new EnemyPool(enemyPrefab, enemyDataSO, enemyContainerParent,GameService.Instance.PlayerService.GetPlayerController().GetPlayerTransform(),this);
-    }
 
     private void Start()
     {
-        //change later
         OnGameStart();
+    }
+
+
+    private async void Awake()
+    {
+        //GameService.Instance.StartGameAction += OnGameStart;
+        await Task.Delay(2 * 1000);
+        enemyPool = new EnemyPool(enemyPrefab, enemyDataSO, enemyContainerParent, GameService.Instance.PlayerService.GetPlayerController().GetPlayerTransform(), this);
     }
 
     public void OnGameStart()
@@ -43,7 +43,7 @@ public class EnemyService : MonoBehaviour
 
     public void SetSpawnCount()
     {
-        for (int i = 0;i<enemySpwanPointDatas.Count;i++) 
+        for (int i = 0; i < enemySpwanPointDatas.Count; i++)
         {
             enemySpwanPointDatas[i].SetCurrentlySpawnCount(enemySpwanPointDatas[i].totalSpawnCount);
             totalEnemies += enemySpwanPointDatas[i].totalSpawnCount;
@@ -52,9 +52,9 @@ public class EnemyService : MonoBehaviour
 
     private void Update()
     {
-        if(isSpawning==true)
+        if (isSpawning == true)
         {
-            if(enemySpwanPointDatas.Count>0)
+            if (enemySpwanPointDatas.Count > 0)
             {
                 timer += Time.deltaTime;
                 if (timer >= spawnTime)
@@ -93,7 +93,7 @@ public class EnemyService : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(totalEnemies > 0 && isSpawning==true)
+        if (totalEnemies > 0 && isSpawning == true)
         {
             CloseAllDoors();
         }
@@ -103,7 +103,7 @@ public class EnemyService : MonoBehaviour
     public void ReduceSpawnedEnemyCount()
     {
         totalEnemies--;
-        if(totalEnemies<=0)
+        if (totalEnemies <= 0)
         {
             isSpawning = false;
             OpenAllDoors();
@@ -112,7 +112,7 @@ public class EnemyService : MonoBehaviour
 
     private void OpenAllDoors()
     {
-        foreach(var item in DoorCollection)
+        foreach (var item in DoorCollection)
         {
             item.gameObject.SetActive(false);
         }

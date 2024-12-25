@@ -18,8 +18,7 @@ public class WeaponController
         this.weaponDataSO = weaponDataSO;
         currentWeaponIndex = -1;
         Initialize();
-        //Change this later
-        OnGameStart();
+        GameService.Instance.StartGameAction += OnGameStart;
     }
 
     private void Initialize()

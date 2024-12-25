@@ -12,6 +12,7 @@ public class PlayerController
         this.playerView = playerView;
         this.playerView.SetController(this);
         this.playerData = playerData;
+        GameService.Instance.StartGameAction += OnGameStart;
     }
 
     public void OnGameStart()

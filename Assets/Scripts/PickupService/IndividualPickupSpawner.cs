@@ -8,7 +8,6 @@ public class IndividualPickupSpawner : MonoBehaviour
 
     private void Start()
     {
-        //Change later
         OnGameStart();
     }
 

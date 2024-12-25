@@ -10,6 +10,7 @@ public class EnemyProjectilePool
     public EnemyProjectilePool(EnemyProjectileView enemyProjectilePrefab)
     {
         this.enemyProjectilePrefab = enemyProjectilePrefab;
+        GameService.Instance.StartGameAction += OnGameStart;
     }
     public EnemyProjectileView GetPooledItem()
     {
@@ -37,6 +38,15 @@ public class EnemyProjectilePool
         if (item != null)
         {
             item.isUsed = false;
+        }
+    }
+
+    public void OnGameStart()
+    {
+        foreach(var item in pooledItems)
+        {
+            item.enemyProjectileView.gameObject.SetActive(false);
+            ReturnToPool(item.enemyProjectileView);
         }
     }
 

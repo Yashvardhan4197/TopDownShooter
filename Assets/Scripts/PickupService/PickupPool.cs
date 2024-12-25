@@ -11,6 +11,7 @@ public class PickupPool
     {
         this.pickupDataSO = pickupDataSO;
         this.pickupPrefab = pickupPrefab;
+        GameService.Instance.StartGameAction += OnGameStart;
     }
 
     public PickupController GetPooledItem()
