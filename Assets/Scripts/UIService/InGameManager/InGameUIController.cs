@@ -1,10 +1,13 @@
 ﻿
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InGameUIController
 {
     private InGameUIView inGameUIView;
     private bool isPaused;
+    private bool isLevelDone;
     public InGameUIController(InGameUIView inGameUIView)
     {
         this.inGameUIView = inGameUIView;
@@ -15,18 +18,23 @@ public class InGameUIController
     public void CloseInGameUIPopUps()
     {
         ResumeGame();
-        //change for win lose popups too;
+        CloseGameLostScreen();
+        CloseGameWinScreen();
+        CheckForNextLevel();
     }
 
     public void TogglePause()
     {
-        if(isPaused)
+        if (isLevelDone == false)
         {
-            ResumeGame();
-        }
-        else
-        {
-            OpenPauseMenu();
+            if (isPaused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                OpenPauseMenu();
+            }
         }
     }
 
@@ -58,4 +66,48 @@ public class InGameUIController
         isPaused = true;
     }
 
+
+    public void OpenGameWinScreen()
+    {
+        inGameUIView.GetWinScreenMenu().gameObject.SetActive(true);
+        isLevelDone = true;
+        Time.timeScale = 0f;
+    }
+
+    public void CloseGameWinScreen()
+    {
+        inGameUIView.GetWinScreenMenu().gameObject.SetActive(false);
+        isLevelDone = false;
+    }
+
+    public void OpenGameLostScreen()
+    {
+        inGameUIView.GetLostScreenMenu().gameObject.SetActive(true);
+        isLevelDone = true;
+        Time.timeScale = 0f;
+    }
+
+    public void CloseGameLostScreen()
+    {
+        inGameUIView.GetLostScreenMenu().gameObject.SetActive(false);
+        isLevelDone = false;
+    }
+
+    public void CheckForNextLevel()
+    {
+        if(GameService.Instance.LevelService.CurrentLevel+1< SceneManager.sceneCountInBuildSettings)
+        {
+            inGameUIView.GetNextLevelButton().gameObject.SetActive(true);
+            inGameUIView.GetNextLevelButton().onClick.AddListener(SetNextLevel);
+        }
+        else
+        {
+            inGameUIView.GetNextLevelButton().gameObject.SetActive(false);
+        }
+    }
+
+    private void SetNextLevel()
+    {
+        GameService.Instance.LevelService.LoadLevel(GameService.Instance.LevelService.CurrentLevel + 1);
+    }
 }

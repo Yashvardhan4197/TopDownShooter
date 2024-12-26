@@ -96,6 +96,7 @@ public class LevelUIController
         levelUIView.GetLevelButtonCollection()[levelNumber].status = LevelStatus.COMPLETED;
         levelButtonCollection[levelNumber].levelButton.image.color = Color.green;
         levelButtonCollection[levelNumber].status = LevelStatus.COMPLETED;
+        PlayerPrefs.SetInt("level" + level, 2);
         if(levelNumber+1<levelButtonCollection.Count)
         {
             if(levelButtonCollection[levelNumber+1].status!=LevelStatus.COMPLETED)
@@ -103,15 +104,14 @@ public class LevelUIController
                 levelButtonCollection[levelNumber+1].levelButton.interactable = true;
                 levelButtonCollection[levelNumber+1].levelButton.image.color = Color.yellow;
                 levelButtonCollection[levelNumber+1].status = LevelStatus.OPENED;
+                PlayerPrefs.SetInt("level" + (level+1), 0);
             }
         }
-
     }
 
     public void OnLevelButtonClicked(int levelID)
     {
         GameService.Instance.LevelService.LoadLevel(levelID);
-        GameService.Instance.StartGameAction?.Invoke();
     }
 
     public void OnGoBackButtonClicked()

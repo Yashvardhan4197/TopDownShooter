@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PickupController
 {
@@ -18,6 +19,7 @@ public class PickupController
         this.pickupDataSO = pickupDataSO;
         pickupView.SetController(this);
     }
+
 
     public void InitializePickup(Vector3 position)
     {
@@ -68,15 +70,15 @@ public class PickupController
     {
         if (pickupDataSO.PickupCollections[currentEnemyTypeIndex].PickupType==PickupType.HEALTH_BOOST)
         {
-            Debug.Log("Player health increase");
+            GameService.Instance.PlayerService.GetPlayerController().AddPlayerHealth(pickupDataSO.PickupCollections[currentEnemyTypeIndex].HealthBoost);
         }
         else if(pickupDataSO.PickupCollections[currentEnemyTypeIndex].PickupType==PickupType.SHIELD)
         {
-            Debug.Log("Invincible Enemy");
+            GameService.Instance.PlayerService.GetPlayerController().ActivateShield(pickupDataSO.PickupCollections[currentEnemyTypeIndex].ActivatedTimer);
         }
         else if(pickupDataSO.PickupCollections[currentEnemyTypeIndex].PickupType==PickupType.AMMO_BOOST)
         {
-            Debug.Log("Ammo Increased");
+            GameService.Instance.WeaponService.GetWeaponController().IncreaseAmmo(pickupDataSO.PickupCollections[currentEnemyTypeIndex].AmmoBoost);
         }
 
 
@@ -94,4 +96,7 @@ public class PickupController
     {
         destructionCoroutine= coroutine;
     }
+
+
+
 }

@@ -8,6 +8,7 @@ public class PlayerView : MonoBehaviour
     private Vector2 movement;
     [SerializeField] Rigidbody2D rb2D;
     [SerializeField] Animator playerAnimator;
+    [SerializeField] SpriteRenderer spriteRenderer;
     public void SetController(PlayerController playerController)
     {
         this.playerController = playerController;
@@ -27,6 +28,7 @@ public class PlayerView : MonoBehaviour
         movement = movement.normalized;
         SetAnimation(movement);
         TogglePause();
+        playerController?.Update();
     }
 
     private void TogglePause()
@@ -63,4 +65,7 @@ public class PlayerView : MonoBehaviour
 
     public Rigidbody2D GetRigidbody2D() => rb2D;
     public Animator GetAnimator() => playerAnimator;
+
+    public SpriteRenderer GetSpriteRenderer() => spriteRenderer;
+
 }

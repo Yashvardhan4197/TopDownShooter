@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,12 +18,19 @@ public class InGameUIView : MonoBehaviour
     [SerializeField] GameObject GameCompletedPopUpGB;
     [SerializeField] Button NextLevelButton;
     [SerializeField] Button RestartButtonGameCompletePopUp;
+    [SerializeField] Button ExitToLobbyGameWonPopUp;
 
     private void Start()
     {
         ResumeButton.onClick.AddListener(OnResumeGameButtonClicked);
         RestartButtonPauseMenuPopUo.onClick.AddListener(OnRestartButtonClicked);
         ExitToLobbyButtonPauseMenuPopUp.onClick.AddListener(OnExitToLobbyButtonClicked);
+
+        RestartButtonGameLostPopUp.onClick.AddListener(OnRestartButtonClicked);
+        ExitToLobbyGameLostPopUp.onClick.AddListener(OnExitToLobbyButtonClicked);
+
+        RestartButtonGameCompletePopUp.onClick.AddListener(OnRestartButtonClicked);
+        ExitToLobbyGameWonPopUp.onClick.AddListener(OnExitToLobbyButtonClicked);
     }
 
     private void OnExitToLobbyButtonClicked()
@@ -45,7 +53,18 @@ public class InGameUIView : MonoBehaviour
         this.inGameUIController= inGameUIController;
     }
 
+    public void OpenNextLevel()
+    {
+
+    }
+
+
+    public GameObject GetLostScreenMenu() => GameLostPopUpGB;
+
+    public GameObject GetWinScreenMenu() => GameCompletedPopUpGB;
 
     public GameObject GetPauseMenu() => PauseMenuPopUpGB;
+
+    public Button GetNextLevelButton() => NextLevelButton;
 
 }

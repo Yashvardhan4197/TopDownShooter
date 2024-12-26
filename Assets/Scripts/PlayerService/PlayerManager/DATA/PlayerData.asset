@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 3
   health: 200
+  startPostionsForEachLevel:
+  - {fileID: 6614007158861139128, guid: 43857c6a384bb2547bfa65da8fdae23c, type: 3}

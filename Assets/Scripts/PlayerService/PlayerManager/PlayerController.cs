@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController
@@ -6,7 +7,8 @@ public class PlayerController
     private PlayerView playerView;
     private PlayerDataSO playerData;
     private float currentHealth;
-
+    private bool isShieldActive;
+    private float shieldTimeDuration;
     public PlayerController(PlayerView playerView,PlayerDataSO playerData)
     {
         this.playerView = playerView;
@@ -20,6 +22,10 @@ public class PlayerController
         playerView.GetAnimator().SetFloat("X", 0);
         playerView.GetAnimator().SetFloat ("Y", 0);
         currentHealth = playerData.Health;
+        GameService.Instance.UIService.GetPlayerUIController().SetMaxHealth(playerData.Health);
+        GameService.Instance.UIService.GetPlayerUIController().UpdateHealthBar(currentHealth);
+        playerView.transform.position = playerData.StartPositionsForEachLevel[GameService.Instance.LevelService.CurrentLevel - 1].position;
+        DisableShield();
     }
 
 
@@ -41,16 +47,72 @@ public class PlayerController
 
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
+        if (isShieldActive == false)
         {
-            //Restart Section Player DEAD
-            Debug.Log("Player Dead");
+            currentHealth -= damage;
+            GameService.Instance.UIService.GetPlayerUIController().UpdateHealthBar(currentHealth);
+            if (currentHealth <= 0)
+            {
+                GameService.Instance.UIService.GetInGameUIController().OpenGameLostScreen();
+            }
         }
     }
+
+    public void AddPlayerHealth(float health)
+    {
+        if (currentHealth + health >= playerData.Health)
+        {
+            currentHealth = playerData.Health;
+        }
+        else
+        {
+            currentHealth += health;
+        }
+        GameService.Instance.UIService.GetPlayerUIController().UpdateHealthBar(currentHealth);
+    }
+
 
     public void TogglePause()
     {
         GameService.Instance.UIService.GetInGameUIController().TogglePause();
     }
+
+    public void SetShieldStatus(bool shield)
+    {
+        isShieldActive = shield;
+
+        if(isShieldActive==false)
+        {
+            playerView.GetSpriteRenderer().color = Color.white;
+        }
+        else
+        {
+            playerView.GetSpriteRenderer().color = Color.cyan;
+        }
+
+    }
+
+
+    public void Update()
+    {
+        if (isShieldActive == true && Time.time >= shieldTimeDuration)
+        {
+            DisableShield();
+        }
+    }
+
+    private void DisableShield()
+    {
+        isShieldActive = false;
+        SetShieldStatus(isShieldActive);
+    }
+
+    public void ActivateShield(float shieldTime)
+    {
+        shieldTimeDuration = Time.time + shieldTime;
+        isShieldActive = true;
+        SetShieldStatus(isShieldActive);
+    }
+
+
 }

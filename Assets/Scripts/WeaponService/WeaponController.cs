@@ -82,7 +82,12 @@ public class WeaponController
                     currentWeaponIndex = index - 1;
                 }
 
-
+                GameService.Instance.UIService.GetWeaponUIController().SetCurrentWeapon(currentWeaponIndex);
+                if(currentWeaponIndex!=-1)
+                {
+                    GameService.Instance.UIService.GetWeaponUIController().UpdateCurrentBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet);
+                    GameService.Instance.UIService.GetWeaponUIController().UpdateTotalBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets);
+                }
                 nextTimetoFire = 0;
             }
         }
@@ -110,7 +115,7 @@ public class WeaponController
                     hit2D = Physics2D.Raycast(ray2D.origin, ray2D.direction, weaponDataSO.Weapons[currentWeaponIndex].MaxRange,layerMask);
                     InstantiateBulletTracer(ray2D, hit2D);
                     weaponDataSO.Weapons[currentWeaponIndex].SetCurrentUsedBullet(weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet - 1);
-                    //check if DamageAble object
+                    GameService.Instance.UIService.GetWeaponUIController().UpdateCurrentBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet);
                     IDamageAble damageAbleItem = hit2D.transform?.GetComponent<IDamageAble>();
 
                     if (damageAbleItem != null)
@@ -176,8 +181,8 @@ public class WeaponController
         isReloading=false;
         spawnedWeapons[currentWeaponIndex].GetWeaponAnimController().SetBool("isReloading", isReloading);
         spawnedWeapons[currentWeaponIndex].GetWeaponAnimController().SetBool("isEmpty", false);
-        Debug.Log("After Reload current Bullets: " + weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet);
-        //Update in UI later
+        GameService.Instance.UIService.GetWeaponUIController().UpdateCurrentBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet);
+        GameService.Instance.UIService.GetWeaponUIController().UpdateTotalBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets);
     }
 
     public void FlipCurrentWeapon(float angle)
@@ -232,6 +237,27 @@ public class WeaponController
         }
 
         GameService.Instance.PlayerService.GetPlayerController().SetPlayerDirection(xDirection, yDirection);
-
     }
+
+
+    public void IncreaseAmmo(int ammo)
+    {
+        for (int i= 0;i < weaponDataSO.Weapons.Count;i++)
+        {
+            if (weaponDataSO.Weapons[i].CurrentInMagBullets < weaponDataSO.Weapons[i].MaxInMagBullets)
+            {
+                int temp = ammo + weaponDataSO.Weapons[i].CurrentInMagBullets;
+                if(temp>= weaponDataSO.Weapons[i].MaxInMagBullets)
+                {
+                    temp = weaponDataSO.Weapons[i].MaxInMagBullets;
+                }
+                weaponDataSO.Weapons[i].SetCurrentInMagBullet(temp);
+            }
+        }
+        if (currentWeaponIndex != -1)
+        {
+            GameService.Instance.UIService.GetWeaponUIController().UpdateTotalBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets);
+        }
+    }
+
 }

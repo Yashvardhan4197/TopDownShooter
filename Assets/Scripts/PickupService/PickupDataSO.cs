@@ -13,12 +13,12 @@ public class PickupDataSO: ScriptableObject
         [SerializeField] AnimatorController pickupAnimator;
         [SerializeField] float healthBoost;
         [SerializeField] float activatedTimer;
-        [SerializeField] float ammoBoost;
+        [SerializeField] int ammoBoost;
         [SerializeField] int destructTime;
 
         public PickupType PickupType { get { return pickupType; } } 
         public float HealthBoost { get { return healthBoost; } }
-        public float AmmoBoost { get { return ammoBoost; } }
+        public int AmmoBoost { get { return ammoBoost; } }
         public float ActivatedTimer {  get { return activatedTimer; } }
         public AnimatorController PickupAnimator { get { return pickupAnimator; } }
         public int DestructTime {  get { return destructTime; } }

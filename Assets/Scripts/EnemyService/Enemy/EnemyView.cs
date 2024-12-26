@@ -16,9 +16,12 @@ public class EnemyView : MonoBehaviour,IDamageAble
     public async void TakeDamage(int damage)
     {
         enemyController?.TakeDamage(damage);
-        gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-        await Task.Delay(1 * 100);
-        gameObject.GetComponent<SpriteRenderer>().color = Color.white; 
+        if (this != null)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+            await Task.Delay(1 * 100);
+            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        }
     }
 
     private void Update()
