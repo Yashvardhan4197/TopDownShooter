@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameWinManager : MonoBehaviour
 {
     [SerializeField] Animator chestAnimator;
-
+    [SerializeField] GameObject gameWinDoor;
 
     private void Start()
     {
@@ -24,6 +24,7 @@ public class GameWinManager : MonoBehaviour
     {
         GameService.Instance.UIService.GetInGameUIController().OpenGameWinScreen();
         GameService.Instance.UIService.GetLevelUIController().SetLevelStatusCompleted(GameService.Instance.LevelService.CurrentLevel);
+        gameWinDoor.SetActive(false);
     }
 
 }
