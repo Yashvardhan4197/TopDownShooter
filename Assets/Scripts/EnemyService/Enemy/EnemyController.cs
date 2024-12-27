@@ -124,8 +124,7 @@ public class EnemyController
                     nextTimeToAttack = Time.time + enemyDataSO.EnemyCollections[currentSetEnemy].AttackDelay;
                     EnemyProjectileView newEnemyProjectile = GameService.Instance.EnemyProjectilePool.GetPooledItem();
                     newEnemyProjectile.SetDamage(enemyDataSO.EnemyCollections[(currentSetEnemy)].Damage);
-                    newEnemyProjectile.SetTransformPosition(enemyView.transform.position,GameService.Instance.PlayerService.GetPlayerController().GetPlayerTransform().position);
-                    newEnemyProjectile.gameObject.SetActive(true);
+                    newEnemyProjectile.SetTransformPosition(enemyView.transform.position);
                 }
             }
         }

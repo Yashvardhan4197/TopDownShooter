@@ -17,6 +17,7 @@ public class EnemyPool
         this.enemyContainerParent = enemyContainerParent;
         this.playerTransform = playerTransform;
         //this.enemyService = enemyService;
+        GameService.Instance.StartGameAction += OnGameStart;
     }
 
     public EnemyController GetPooledItem()
