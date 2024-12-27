@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b2500a4db3c173f4dbf908f545801a9d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   muzzleTransform: {fileID: 8635584035704680941}
   weaponAnimController: {fileID: 7101920429962469731}
+  spriteRenderer: {fileID: 3804659753745070590}
 --- !u!95 &7101920429962469731
 Animator:
   serializedVersion: 5

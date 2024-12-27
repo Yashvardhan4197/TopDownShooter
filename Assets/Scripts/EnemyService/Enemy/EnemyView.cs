@@ -1,6 +1,5 @@
 
 using System.Threading.Tasks;
-using UnityEditor.Animations;
 using UnityEngine;
 
 public class EnemyView : MonoBehaviour,IDamageAble
@@ -49,7 +48,7 @@ public class EnemyView : MonoBehaviour,IDamageAble
     }
 
     public Animator GetAnimator() => enemyAnimator;
-    public void SetAnimatorController(AnimatorController animator)
+    public void SetAnimatorController(RuntimeAnimatorController animator)
     {
         enemyAnimator.runtimeAnimatorController = animator;
     }

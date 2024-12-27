@@ -153,7 +153,6 @@ public class EnemyController
         {
             if (isDead == false)
             {
-                Debug.Log("enemy dead");
                 enemyView.GetAnimator().SetBool("isDead", true);
                 enemyView.OnDeathAnimationStart();
                 enemyService.ReduceSpawnedEnemyCount();

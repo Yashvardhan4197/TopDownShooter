@@ -282,6 +282,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyService 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3178439029948190852, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5337076435624543893, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.13
@@ -356,19 +360,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9149938020972186498, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
       propertyPath: m_Size.x
-      value: 0.50068307
+      value: 0.14159727
       objectReference: {fileID: 0}
     - target: {fileID: 9149938020972186498, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
       propertyPath: m_Size.y
-      value: 2.935566
+      value: 7.0588684
       objectReference: {fileID: 0}
     - target: {fileID: 9149938020972186498, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
       propertyPath: m_Offset.x
-      value: -1.5625116
+      value: -2.6954901
       objectReference: {fileID: 0}
     - target: {fileID: 9149938020972186498, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
       propertyPath: m_Offset.y
-      value: 0.967783
+      value: -1.0938683
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -531,21 +535,21 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: -1, y: 17, z: 0}
+  - first: {x: -4, y: 23, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: 0, y: 17, z: 0}
+  - first: {x: -4, y: 24, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -573,15 +577,23 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 4
+  - m_RefCount: 3
     m_Data: {fileID: 11400000, guid: 7b3a88538b1aa6e45aac7859bfe9c9a3, type: 2}
-  - m_RefCount: 4
+  - m_RefCount: 3
     m_Data: {fileID: 11400000, guid: 40e45384b8c444149bb7488d39420a66, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 6de0665f533b0f74eb32b5321671c945, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 1f52dcbdd701b9b43b8398928ad2c109, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 4
+  - m_RefCount: 3
     m_Data: {fileID: 1112948993, guid: 30e6117ab5ecb3249a63068fe9ec6eab, type: 3}
-  - m_RefCount: 4
+  - m_RefCount: 3
     m_Data: {fileID: -100591742, guid: 30e6117ab5ecb3249a63068fe9ec6eab, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 570421589, guid: 30e6117ab5ecb3249a63068fe9ec6eab, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 292233312, guid: 30e6117ab5ecb3249a63068fe9ec6eab, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 8
     m_Data:
@@ -23082,6 +23094,14 @@ PrefabInstance:
     - target: {fileID: 8140638738490142182, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
       propertyPath: enemySpwanPointDatas.Array.data[0].totalSpawnCount
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9149938020972186498, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
+      propertyPath: m_Size.y
+      value: 0.114581585
+      objectReference: {fileID: 0}
+    - target: {fileID: 9149938020972186498, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.3394072
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

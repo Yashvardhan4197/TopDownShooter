@@ -33,7 +33,6 @@ public class EnemyProjectileView: MonoBehaviour
     {
         if(collision.gameObject.layer==3) 
         {
-            Debug.Log("projectile hit");
             GameService.Instance.PlayerService.GetPlayerController().TakeDamage(damage);
             GameService.Instance.EnemyProjectilePool.ReturnToPool(this);
             this.gameObject.SetActive(false);

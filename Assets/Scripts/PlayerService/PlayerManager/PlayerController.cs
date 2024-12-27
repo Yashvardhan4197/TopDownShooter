@@ -115,5 +115,16 @@ public class PlayerController
         SetShieldStatus(isShieldActive);
     }
 
+    public void UpdateWeaponSpriteOrder(Vector2 playerPos)
+    {
+        if(playerPos.y<0)
+        {
+            GameService.Instance.WeaponService.GetWeaponController().SetWeaponSpriteOrder(1);
+        }
+        else
+        {
+            GameService.Instance.WeaponService.GetWeaponController().SetWeaponSpriteOrder(0);
+        }
+    }
 
 }

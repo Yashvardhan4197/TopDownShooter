@@ -43,6 +43,7 @@ public class WeaponController
     {
         for(int i=0;i<spawnedWeapons.Count;i++)
         {
+            spawnedWeapons[i].GetSpriteRenderer().sortingOrder = 1;
             spawnedWeapons[i].gameObject.SetActive(false);
         }
     }
@@ -91,6 +92,7 @@ public class WeaponController
                 nextTimetoFire = 0;
                 GameService.Instance.SoundService.PlaySFX(Sound.WEAPON_CHANGE);
             }
+            SetWeaponSpriteOrder(1);
         }
         else
         {
@@ -278,6 +280,15 @@ public class WeaponController
                 GameService.Instance.UIService.GetWeaponUIController().UpdateCurrentBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet);
             }
         }
+    }
+
+    public void SetWeaponSpriteOrder(int order)
+    {
+        if(currentWeaponIndex != -1)
+        {
+            spawnedWeapons[currentWeaponIndex].GetSpriteRenderer().sortingOrder = order;
+        }
+
     }
 
 }

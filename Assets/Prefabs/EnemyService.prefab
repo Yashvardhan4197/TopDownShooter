@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 5337076435624543893}
   - component: {fileID: 8140638738490142182}
   - component: {fileID: 9149938020972186498}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyService
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,19 +110,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpwanPointDatas:
-  - SpawnCount: 5
+  - totalSpawnCount: 0
     SpawnPosition: {fileID: 885519251767591241}
-  - SpawnCount: 5
+  - totalSpawnCount: 0
     SpawnPosition: {fileID: 9136877226501409076}
-  - SpawnCount: 2
+  - totalSpawnCount: 0
     SpawnPosition: {fileID: 4142186190271221462}
-  - SpawnCount: 2
+  - totalSpawnCount: 0
     SpawnPosition: {fileID: 8043721252500302144}
   spawnTrigger: {fileID: 9149938020972186498}
   spawnTime: 4
-  enemyPrefab: {fileID: 3880544349219190659, guid: ceed2babb8db7214b9748a42919fc1d1, type: 3}
-  enemyContainerParent: {fileID: 5235582784204711665}
-  enemyDataSO: {fileID: 11400000, guid: 092e219ff92715b41b603dea115e8f9e, type: 2}
+  DoorCollection: []
 --- !u!61 &9149938020972186498
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -155,7 +153,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0344038, y: -0.27522936}
+  m_Offset: {x: -0.0344038, y: -0.431374}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -166,7 +164,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.5183487, y: 0.44954127}
+  m_Size: {x: 5.5183487, y: 0.137252}
   m_EdgeRadius: 0
 --- !u!1 &5457671822324523743
 GameObject:

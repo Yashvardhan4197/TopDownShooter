@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 
 [CreateAssetMenu(fileName ="PickupData",menuName ="ScriptableObjects/PickupData")]
@@ -10,7 +9,7 @@ public class PickupDataSO: ScriptableObject
     public class PickupCollection
     {
         [SerializeField] PickupType pickupType;
-        [SerializeField] AnimatorController pickupAnimator;
+        [SerializeField] RuntimeAnimatorController pickupAnimator;
         [SerializeField] float healthBoost;
         [SerializeField] float activatedTimer;
         [SerializeField] int ammoBoost;
@@ -20,7 +19,7 @@ public class PickupDataSO: ScriptableObject
         public float HealthBoost { get { return healthBoost; } }
         public int AmmoBoost { get { return ammoBoost; } }
         public float ActivatedTimer {  get { return activatedTimer; } }
-        public AnimatorController PickupAnimator { get { return pickupAnimator; } }
+        public RuntimeAnimatorController PickupAnimator { get { return pickupAnimator; } }
         public int DestructTime {  get { return destructTime; } }
 
     }

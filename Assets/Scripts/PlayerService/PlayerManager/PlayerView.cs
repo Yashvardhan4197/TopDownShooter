@@ -50,6 +50,7 @@ public class PlayerView : MonoBehaviour
         {
             playerAnimator.SetFloat("X", movement.x);
             playerAnimator.SetFloat("Y", movement.y);
+            playerController?.UpdateWeaponSpriteOrder(movement);
             playerAnimator.SetBool("running", true);
         }
         else

@@ -88,6 +88,7 @@ public class EnemyService : MonoBehaviour
         {
             isSpawning = true;
         }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
