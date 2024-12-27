@@ -8,11 +8,7 @@ public class EnemyService : MonoBehaviour
     [SerializeField] List<EnemySpwanPointData> enemySpwanPointDatas = new List<EnemySpwanPointData>();
     [SerializeField] BoxCollider2D spawnTrigger;
     [SerializeField] int spawnTime;
-    //[SerializeField] EnemyView enemyPrefab;
-    //[SerializeField] Transform enemyContainerParent;
-    //[SerializeField] EnemyDataSO enemyDataSO;
     [SerializeField] GameObject[] DoorCollection;
-    //private EnemyPool enemyPool;
     private bool isSpawning;
     private float timer;
     public List<EnemySpwanPointData> EnemySpwanPointDatas { get { return enemySpwanPointDatas; } }
@@ -23,30 +19,19 @@ public class EnemyService : MonoBehaviour
         OnGameStart();
     }
 
-
-    private async void Awake()
+    private void OpenAllDoors()
     {
-        //GameService.Instance.StartGameAction += OnGameStart;
-        await Task.Delay(2 * 1000);
-        //enemyPool = new EnemyPool(enemyPrefab, enemyDataSO, enemyContainerParent, GameService.Instance.PlayerService.GetPlayerController().GetPlayerTransform(), this);
-    }
-
-    public void OnGameStart()
-    {
-        isSpawning = false;
-        spawnTrigger.isTrigger = true;
-        timer = 0f;
-        totalEnemies = 0;
-        SetSpawnCount();
-        OpenAllDoors();
-    }
-
-    public void SetSpawnCount()
-    {
-        for (int i = 0; i < enemySpwanPointDatas.Count; i++)
+        foreach (var item in DoorCollection)
         {
-            enemySpwanPointDatas[i].SetCurrentlySpawnCount(enemySpwanPointDatas[i].totalSpawnCount);
-            totalEnemies += enemySpwanPointDatas[i].totalSpawnCount;
+            item.gameObject.SetActive(false);
+        }
+    }
+
+    private void CloseAllDoors()
+    {
+        foreach (var item in DoorCollection)
+        {
+            item?.gameObject.SetActive(true);
         }
     }
 
@@ -69,7 +54,6 @@ public class EnemyService : MonoBehaviour
 
     private void SpawnEnemyPrefab()
     {
-        //Instantiate enemy prefabs from each position
         for (int i = 0; i < enemySpwanPointDatas.Count; i++)
         {
             if (enemySpwanPointDatas[i].CurrentlySpawnCount > 0)
@@ -97,7 +81,6 @@ public class EnemyService : MonoBehaviour
         {
             CloseAllDoors();
         }
-        //spawnTrigger.isTrigger = false;
     }
 
     public void ReduceSpawnedEnemyCount()
@@ -110,21 +93,25 @@ public class EnemyService : MonoBehaviour
         }
     }
 
-    private void OpenAllDoors()
+    public void OnGameStart()
     {
-        foreach (var item in DoorCollection)
+        isSpawning = false;
+        spawnTrigger.isTrigger = true;
+        timer = 0f;
+        totalEnemies = 0;
+        SetSpawnCount();
+        OpenAllDoors();
+    }
+
+    public void SetSpawnCount()
+    {
+        for (int i = 0; i < enemySpwanPointDatas.Count; i++)
         {
-            item.gameObject.SetActive(false);
+            enemySpwanPointDatas[i].SetCurrentlySpawnCount(enemySpwanPointDatas[i].totalSpawnCount);
+            totalEnemies += enemySpwanPointDatas[i].totalSpawnCount;
         }
     }
 
-    private void CloseAllDoors()
-    {
-        foreach (var item in DoorCollection)
-        {
-            item?.gameObject.SetActive(true);
-        }
-    }
 
     [Serializable]
     public class EnemySpwanPointData

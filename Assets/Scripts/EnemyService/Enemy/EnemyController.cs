@@ -15,6 +15,7 @@ public class EnemyController
     private Vector3 randomMovementOffset;
     private int currentSetEnemy;
     private EnemyService enemyService;
+
     public EnemyController(EnemyView enemyView,EnemyDataSO enemyDataSO,Transform playerTransform,Transform EnemyContainerParent,EnemyPool enemyPool)
     {
         this.enemyView=Object.Instantiate(enemyView);
@@ -24,22 +25,6 @@ public class EnemyController
         this.enemyDataSO=enemyDataSO;
         this.enemyPool= enemyPool;
         currentSetEnemy = -1;
-        //this.enemyService= enemyService;
-    }
-
-
-    public void ActivateView(EnemyService enemyService)
-    {
-        enemyView.gameObject.SetActive(true);
-        isAttacking = false;
-        isMoving = true;
-        isDead = false;
-        randomMovementOffset= new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0);
-        RandomizeEnemy();
-        health = enemyDataSO.EnemyCollections[currentSetEnemy].Health;
-        enemyView.GetAnimator().SetBool("isDead", isDead);
-        enemyView.GetCircleCollider().radius = enemyDataSO.EnemyCollections[currentSetEnemy].AttackRadius;
-        this.enemyService = enemyService;
     }
 
     private void RandomizeEnemy()
@@ -47,27 +32,6 @@ public class EnemyController
         int rand = Random.Range(0, enemyDataSO.EnemyCollections.Count);
         currentSetEnemy = rand;
         enemyView.SetAnimatorController(enemyDataSO.EnemyCollections[currentSetEnemy].AnimatorController);
-    }
-
-    public void SetSpawnPosition(Vector3 spawnPosition)
-    {
-        enemyView.transform.position = spawnPosition;
-    }
-
-    public void MoveTowardsPlayer()
-    {
-        if(isMoving)
-        {
-            Vector3 targetPos = playerTransform.position + randomMovementOffset;
-            //float distance = Vector3.Distance(enemyView.transform.position, targetPos);
-            Vector3 direction = (targetPos - enemyView.transform.position).normalized;
-            enemyView.transform.position += direction * enemyDataSO.EnemyCollections[currentSetEnemy].MovementSpeed * Time.deltaTime;
-
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            //enemyView.transform.rotation = Quaternion.Euler(0, 0, angle);
-            SetDirection(angle);
-        }
-        enemyView.GetAnimator().SetBool("isRunning", isMoving);
     }
 
     private void SetDirection(float angle)
@@ -91,9 +55,41 @@ public class EnemyController
         {
             yDirection = y > 0 ? 1 : -1;
         }
-        //set animator x and y based on the angle 
         enemyView.GetAnimator().SetFloat("X", xDirection);
         enemyView.GetAnimator().SetFloat("Y", yDirection);
+    }
+
+    public void ActivateView(EnemyService enemyService)
+    {
+        enemyView.gameObject.SetActive(true);
+        isAttacking = false;
+        isMoving = true;
+        isDead = false;
+        randomMovementOffset= new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0);
+        RandomizeEnemy();
+        health = enemyDataSO.EnemyCollections[currentSetEnemy].Health;
+        enemyView.GetAnimator().SetBool("isDead", isDead);
+        enemyView.GetCircleCollider().radius = enemyDataSO.EnemyCollections[currentSetEnemy].AttackRadius;
+        this.enemyService = enemyService;
+        enemyView.GetSpriteRenderer().color=Color.white;
+    }
+
+    public void SetSpawnPosition(Vector3 spawnPosition)
+    {
+        enemyView.transform.position = spawnPosition;
+    }
+
+    public void MoveTowardsPlayer()
+    {
+        if(isMoving)
+        {
+            Vector3 targetPos = playerTransform.position + randomMovementOffset;
+            Vector3 direction = (targetPos - enemyView.transform.position).normalized;
+            enemyView.transform.position += direction * enemyDataSO.EnemyCollections[currentSetEnemy].MovementSpeed * Time.deltaTime;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            SetDirection(angle);
+        }
+        enemyView.GetAnimator().SetBool("isRunning", isMoving);
     }
 
     public void OnEnemyDestroyed()
@@ -102,7 +98,6 @@ public class EnemyController
         enemyPool.ReturnToPool(this);
         isAttacking=false;
         isDead=false;
-        //GetPickUp-Spawn
     }
 
     public void AttackPlayer()
@@ -157,12 +152,8 @@ public class EnemyController
                 enemyView.OnDeathAnimationStart();
                 enemyService.ReduceSpawnedEnemyCount();
             }
-            isDead = true;
-            
+            isDead = true; 
         }
-        //OnEnemyDestroyed();
-        
-        
     }
 
     public void SpawnPickup()

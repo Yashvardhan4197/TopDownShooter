@@ -9,12 +9,19 @@ public class PlayerController
     private float currentHealth;
     private bool isShieldActive;
     private float shieldTimeDuration;
+    private bool isPaused;
     public PlayerController(PlayerView playerView,PlayerDataSO playerData)
     {
         this.playerView = playerView;
         this.playerView.SetController(this);
         this.playerData = playerData;
         GameService.Instance.StartGameAction += OnGameStart;
+    }
+
+    private void DisableShield()
+    {
+        isShieldActive = false;
+        SetShieldStatus(isShieldActive);
     }
 
     public void OnGameStart()
@@ -26,8 +33,10 @@ public class PlayerController
         GameService.Instance.UIService.GetPlayerUIController().UpdateHealthBar(currentHealth);
         playerView.transform.position = playerData.StartPositionsForEachLevel[GameService.Instance.LevelService.CurrentLevel - 1].position;
         DisableShield();
+        this.playerView.gameObject.SetActive(true);
+        isPaused = false;
+        TogglePause(false);
     }
-
 
     public void MovePlayer(Vector2 movement)
     {
@@ -72,10 +81,10 @@ public class PlayerController
         GameService.Instance.UIService.GetPlayerUIController().UpdateHealthBar(currentHealth);
     }
 
-
-    public void TogglePause()
+    public void TogglePause(bool status)
     {
-        GameService.Instance.UIService.GetInGameUIController().TogglePause();
+        playerView.gameObject.SetActive(!status);
+        isPaused = status;
     }
 
     public void SetShieldStatus(bool shield)
@@ -93,19 +102,12 @@ public class PlayerController
 
     }
 
-
     public void Update()
     {
         if (isShieldActive == true && Time.time >= shieldTimeDuration)
         {
             DisableShield();
         }
-    }
-
-    private void DisableShield()
-    {
-        isShieldActive = false;
-        SetShieldStatus(isShieldActive);
     }
 
     public void ActivateShield(float shieldTime)

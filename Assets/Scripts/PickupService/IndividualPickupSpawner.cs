@@ -5,7 +5,6 @@ public class IndividualPickupSpawner : MonoBehaviour
 {
     [SerializeField] PickupType pickupType;
 
-
     private void Start()
     {
         OnGameStart();
@@ -15,6 +14,4 @@ public class IndividualPickupSpawner : MonoBehaviour
     {
         GameService.Instance.PickupService.SpawnIndividualPickUp(this.transform.position, pickupType);
     }
-
-
 }

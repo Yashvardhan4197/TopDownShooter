@@ -10,14 +10,14 @@ public class PlayerUIController
         GameService.Instance.StartGameAction += OnGameStart;
     }
 
-    public void OnGameStart()
-    {
-        OpenPlayerUI();
-    }
-
     private void OpenPlayerUI()
     {
         playerUIView.gameObject.SetActive(true);
+    }
+
+    public void OnGameStart()
+    {
+        OpenPlayerUI();
     }
 
     public void ClosePlayerUI()

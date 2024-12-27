@@ -14,12 +14,19 @@ public class WeaponUIController
         GameService.Instance.StartGameAction += OnGameStart;
     }
 
+    private void UpdateBulletsOnView()
+    {
+        weaponUIView.GetCurrentWeaponBullets().text = currentWeaponBullets.ToString() + "/" + currentWeaponTotalBullets.ToString();
+
+    }
+
     public void OnGameStart()
     {
         currentWeaponBullets = 0;
         currentWeaponTotalBullets = 0;
         UpdateBulletsOnView();
         DeactivateText();
+        SetCurrentWeapon(-1);
     }
 
 
@@ -33,12 +40,6 @@ public class WeaponUIController
     {
         currentWeaponBullets=bullets;
         UpdateBulletsOnView();
-    }
-
-    private void UpdateBulletsOnView()
-    {
-        weaponUIView.GetCurrentWeaponBullets().text=currentWeaponBullets.ToString()+"/"+currentWeaponTotalBullets.ToString();
-        
     }
 
     public void ActivateText()

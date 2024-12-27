@@ -1,7 +1,5 @@
 
-using System;
 using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class EnemyTurretManager : MonoBehaviour,IDamageAble
@@ -18,7 +16,7 @@ public class EnemyTurretManager : MonoBehaviour,IDamageAble
     private bool isDetected;
     private Transform playerTransform;
     private float nextTimeToFire;
-    private float colorTime;
+
     private void Start()
     {
         isDetected = false;
@@ -51,9 +49,6 @@ public class EnemyTurretManager : MonoBehaviour,IDamageAble
         {
             ShootPlayer();
         }
-
-
-
     }
 
     private void RotateTowardsPlayer(Vector3 direction)
@@ -61,7 +56,6 @@ public class EnemyTurretManager : MonoBehaviour,IDamageAble
         float angle=Mathf.Atan2(direction.y,direction.x)*Mathf.Rad2Deg;
         gunTransform.rotation=Quaternion.Euler(0,0,angle);
     }
-
 
     private void ShootPlayer()
     {
@@ -79,6 +73,17 @@ public class EnemyTurretManager : MonoBehaviour,IDamageAble
         Gizmos.DrawWireSphere(transform.position, range);
     }
 
+    private IEnumerator SetColor()
+    {
+        mainSprite.color = Color.red;
+        yield return new WaitForSeconds(2f);
+        if (this != null)
+        {
+            detectedSprite.color = Color.white;
+        }
+        mainSprite.color = Color.white;
+    }
+
     public void TakeDamage(int damage)
     {
         health-=damage;
@@ -90,17 +95,6 @@ public class EnemyTurretManager : MonoBehaviour,IDamageAble
         {
             Destroy(gameObject);
         }
-    }
-
-    private IEnumerator SetColor()
-    {
-        mainSprite.color = Color.red;
-        yield return new WaitForSeconds(2f);
-        if(this!=null)
-        {
-            detectedSprite.color = Color.white;
-        }
-        mainSprite.color = Color.white;
     }
 
 }

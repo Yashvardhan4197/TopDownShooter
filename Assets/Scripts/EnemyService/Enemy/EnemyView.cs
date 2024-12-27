@@ -1,4 +1,5 @@
 
+using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -7,21 +8,8 @@ public class EnemyView : MonoBehaviour,IDamageAble
     private EnemyController enemyController;
     [SerializeField] Animator enemyAnimator;
     [SerializeField] CircleCollider2D circleCollider;
-    public void SetController(EnemyController enemyController)
-    {
-        this.enemyController = enemyController;
-    }
-
-    public async void TakeDamage(int damage)
-    {
-        enemyController?.TakeDamage(damage);
-        if (this != null)
-        {
-            gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-            await Task.Delay(1 * 100);
-            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
-        }
-    }
+    [SerializeField] SpriteRenderer spriteRenderer;
+    private bool coroutineStatus;
 
     private void Update()
     {
@@ -31,12 +19,11 @@ public class EnemyView : MonoBehaviour,IDamageAble
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Attack Animation
-        if(collision.gameObject.layer==3)
+        if (collision.gameObject.layer == 3)
         {
             enemyController.StartAttacking();
         }
-        
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -47,7 +34,48 @@ public class EnemyView : MonoBehaviour,IDamageAble
         }
     }
 
+    private void OnEnemyDeathAnimationComplete()
+    {
+        enemyController?.OnEnemyDestroyed();
+        enemyController?.SpawnPickup();
+    }
+
+    private IEnumerator SetColor()
+    {
+        if (coroutineStatus == true)
+        {
+            spriteRenderer.color = Color.white;
+            StopCoroutine(SetColor());
+            coroutineStatus = false;
+        }
+        else
+        {
+            coroutineStatus = true;
+            spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(1f);
+            if (this != null)
+            {
+                spriteRenderer.color = Color.white;
+            }
+        }
+    }
+
+    public void SetController(EnemyController enemyController)
+    {
+        this.enemyController = enemyController;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        enemyController?.TakeDamage(damage);
+        if (this != null)
+        {
+            StartCoroutine(SetColor());
+        }
+    }
+
     public Animator GetAnimator() => enemyAnimator;
+
     public void SetAnimatorController(RuntimeAnimatorController animator)
     {
         enemyAnimator.runtimeAnimatorController = animator;
@@ -59,12 +87,8 @@ public class EnemyView : MonoBehaviour,IDamageAble
         Invoke("OnEnemyDeathAnimationComplete", deathAnimationDuration+.2f);
     }
 
-    private void OnEnemyDeathAnimationComplete()
-    {
-        enemyController?.OnEnemyDestroyed();
-        enemyController?.SpawnPickup();
-    }
-
     public CircleCollider2D GetCircleCollider()=>circleCollider;
+
+    public SpriteRenderer GetSpriteRenderer() => spriteRenderer;
 
 }

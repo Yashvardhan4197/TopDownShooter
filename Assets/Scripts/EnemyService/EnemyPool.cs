@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +8,6 @@ public class EnemyPool
     private EnemyDataSO enemyDataSO;
     private Transform enemyContainerParent;
     private Transform playerTransform;
-    private EnemyService enemyService;
     private List<PooledItem> pooledItems=new List<PooledItem>();
     public EnemyPool(EnemyView enemyPrefab, EnemyDataSO enemyDataSO, Transform enemyContainerParent, Transform playerTransform)
     {
@@ -16,8 +15,16 @@ public class EnemyPool
         this.enemyDataSO = enemyDataSO;
         this.enemyContainerParent = enemyContainerParent;
         this.playerTransform = playerTransform;
-        //this.enemyService = enemyService;
         GameService.Instance.StartGameAction += OnGameStart;
+    }
+
+    private EnemyController CreatePooledItem()
+    {
+        PooledItem item = new PooledItem();
+        item.enemyController = new EnemyController(enemyPrefab, enemyDataSO, playerTransform, enemyContainerParent, this);
+        item.isUsed = true;
+        pooledItems.Add(item);
+        return item.enemyController;
     }
 
     public EnemyController GetPooledItem()
@@ -29,15 +36,6 @@ public class EnemyPool
             return item.enemyController;
         }
         return CreatePooledItem();
-    }
-
-    private EnemyController CreatePooledItem()
-    {
-        PooledItem item= new PooledItem();
-        item.enemyController=new EnemyController(enemyPrefab,enemyDataSO,playerTransform,enemyContainerParent,this);
-        item.isUsed = true;
-        pooledItems.Add(item);
-        return item.enemyController;
     }
 
     public void ReturnToPool(EnemyController enemyController)

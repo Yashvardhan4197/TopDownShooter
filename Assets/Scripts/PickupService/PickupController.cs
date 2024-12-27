@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class PickupController
 {
@@ -20,6 +20,21 @@ public class PickupController
         pickupView.SetController(this);
     }
 
+    private void CheckDestructCoroutine()
+    {
+        if (destructionCoroutine != null)
+        {
+            pickupView.StopCoroutine();
+        }
+        destructionCoroutine = null;
+        pickupView.StartCoroutine();
+    }
+
+    private void RandomizePickup()
+    {
+        int rand = Random.Range(0, pickupDataSO.PickupCollections.Count);
+        currentEnemyTypeIndex = rand;
+    }
 
     public void InitializePickup(Vector3 position)
     {
@@ -48,24 +63,6 @@ public class PickupController
 
     }
 
-
-    private void CheckDestructCoroutine()
-    {
-        if (destructionCoroutine != null)
-        {
-            pickupView.StopCoroutine();
-        }
-        destructionCoroutine = null;
-        pickupView.StartCoroutine();
-    }
-
-    private void RandomizePickup()
-    {
-        //randomize pickup based on pickupData types
-        int rand=Random.Range(0,pickupDataSO.PickupCollections.Count);
-        currentEnemyTypeIndex = rand;
-    }
-
     public void OnPickupEquipped()
     {
         if (pickupDataSO.PickupCollections[currentEnemyTypeIndex].PickupType==PickupType.HEALTH_BOOST)
@@ -87,7 +84,6 @@ public class PickupController
     public void ReturnPickup()
     {
         pickupView?.gameObject.SetActive(false);
-        //Return to Pool
         GameService.Instance.PickupService.ReturnToPool(this);
     }
 

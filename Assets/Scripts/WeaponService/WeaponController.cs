@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class WeaponController
@@ -11,6 +10,8 @@ public class WeaponController
     private int currentWeaponIndex;
     private float nextTimetoFire;
     private bool isReloading;
+    private bool isReloadingActive;
+    private float reloadTimer;
     public WeaponController(WeaponView weaponView,WeaponDataSO weaponDataSO)
     {
         this.weaponView = weaponView;
@@ -19,6 +20,25 @@ public class WeaponController
         currentWeaponIndex = -1;
         Initialize();
         GameService.Instance.StartGameAction += OnGameStart;
+    }
+
+    private void RemoveWeapons()
+    {
+        for (int i = 0; i < spawnedWeapons.Count; i++)
+        {
+            spawnedWeapons[i].GetSpriteRenderer().sortingOrder = 1;
+            spawnedWeapons[i].gameObject.SetActive(false);
+        }
+    }
+
+    private void ResetBullets()
+    {
+        //Update in UI too later
+        for (int i = 0; i < weaponDataSO.Weapons.Count; i++)
+        {
+            weaponDataSO.Weapons[i].SetCurrentInMagBullet(weaponDataSO.Weapons[i].MaxInMagBullets);
+            weaponDataSO.Weapons[i].SetCurrentUsedBullet(weaponDataSO.Weapons[i].MaxUsedBullet);
+        }
     }
 
     private void Initialize()
@@ -32,30 +52,54 @@ public class WeaponController
         }
     }
 
+    private void InstantiateBulletTracer(Ray2D ray2D, RaycastHit2D hit2D)
+    {
+        var tracer = UnityEngine.Object.Instantiate(weaponDataSO.Weapons[currentWeaponIndex].BulletTrail, ray2D.origin, Quaternion.identity);
+        tracer.AddPosition(ray2D.origin);
+        Vector2 targetPos = Vector2.zero;
+        if (hit2D.transform != null)
+        {
+            targetPos = hit2D.point;
+        }
+        else
+        {
+            targetPos = ray2D.origin + ray2D.direction * weaponDataSO.Weapons[currentWeaponIndex].MaxRange;
+        }
+        tracer.transform.position = targetPos;
+    }
+
+    private void CompleteReloading()
+    {
+        int neededBullets = weaponDataSO.Weapons[currentWeaponIndex].MaxUsedBullet - weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet;
+        if (weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets >= neededBullets)
+        {
+            weaponDataSO.Weapons[currentWeaponIndex].SetCurrentUsedBullet(weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet + neededBullets);
+            weaponDataSO.Weapons[currentWeaponIndex].SetCurrentInMagBullet(weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets - neededBullets);
+        }
+        else
+        {
+            weaponDataSO.Weapons[currentWeaponIndex].SetCurrentUsedBullet(weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet + weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets);
+            weaponDataSO.Weapons[currentWeaponIndex].SetCurrentInMagBullet(0);
+        }
+        isReloading = false;
+        spawnedWeapons[currentWeaponIndex].GetWeaponAnimController().SetBool("isReloading", isReloading);
+        spawnedWeapons[currentWeaponIndex].GetWeaponAnimController().SetBool("isEmpty", false);
+        GameService.Instance.UIService.GetWeaponUIController().UpdateCurrentBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet);
+        GameService.Instance.UIService.GetWeaponUIController().UpdateTotalBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets);
+        GameService.Instance.SoundService.StopSpecialSound();
+        GameService.Instance.SoundService.PlaySFX(Sound.RELOAD_COMPLETE);
+        isReloadingActive = false;
+        reloadTimer = 0f;
+    }
+
     public void OnGameStart()
     {
         RemoveWeapons();
         currentWeaponIndex = -1;
+        isReloadingActive = false;
+        reloadTimer = 0f;
+        isReloading = false;
         ResetBullets();
-    }
-
-    private void RemoveWeapons()
-    {
-        for(int i=0;i<spawnedWeapons.Count;i++)
-        {
-            spawnedWeapons[i].GetSpriteRenderer().sortingOrder = 1;
-            spawnedWeapons[i].gameObject.SetActive(false);
-        }
-    }
-
-    private void ResetBullets()
-    {
-        //Update in UI too later
-        for(int i=0;i<weaponDataSO.Weapons.Count;i++)
-        {
-            weaponDataSO.Weapons[i].SetCurrentInMagBullet(weaponDataSO.Weapons[i].MaxInMagBullets);
-            weaponDataSO.Weapons[i].SetCurrentUsedBullet(weaponDataSO.Weapons[i].MaxUsedBullet);
-        }
     }
 
     public void OnWeaponChooseButtonClicked(int index)
@@ -140,23 +184,6 @@ public class WeaponController
 
     }
 
-    private void InstantiateBulletTracer(Ray2D ray2D, RaycastHit2D hit2D)
-    {
-        var tracer = UnityEngine.Object.Instantiate(weaponDataSO.Weapons[currentWeaponIndex].BulletTrail, ray2D.origin, Quaternion.identity);
-        tracer.AddPosition(ray2D.origin);
-        Vector2 targetPos = Vector2.zero;
-        if(hit2D.transform!=null)
-        {
-            targetPos = hit2D.point;
-        }
-        else
-        {
-            targetPos=ray2D.origin+ray2D.direction*weaponDataSO.Weapons[currentWeaponIndex].MaxRange;
-        }
-        tracer.transform.position = targetPos;
-    }
-
-
     public void ReloadCurrentWeapon()
     {
         if (currentWeaponIndex!=-1)
@@ -164,35 +191,26 @@ public class WeaponController
             if (weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet < weaponDataSO.Weapons[currentWeaponIndex].MaxUsedBullet && weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets > 0)
             {
                 isReloading = true;
+                isReloadingActive = true;
+                reloadTimer = weaponDataSO.Weapons[currentWeaponIndex].ReloadTimeInSeconds;
                 spawnedWeapons[currentWeaponIndex].GetWeaponAnimController().SetBool("isReloading", isReloading);
                 GameService.Instance.SoundService.PlaySpecialSound(Sound.RELOAD);
-                StartReloading();
             }
         }
 
     }
 
-    private async void StartReloading()
+
+    public void Update()
     {
-        await Task.Delay(weaponDataSO.Weapons[currentWeaponIndex].ReloadTimeInSeconds*1000);
-        int neededBullets = weaponDataSO.Weapons[currentWeaponIndex].MaxUsedBullet - weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet;
-        if (weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets>=neededBullets)
+        if(isReloadingActive)
         {
-            weaponDataSO.Weapons[currentWeaponIndex].SetCurrentUsedBullet(weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet + neededBullets);
-            weaponDataSO.Weapons[currentWeaponIndex].SetCurrentInMagBullet(weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets - neededBullets);
+            reloadTimer -= Time.deltaTime;
+            if(reloadTimer <= 0f)
+            {
+                CompleteReloading();
+            }
         }
-        else
-        {
-            weaponDataSO.Weapons[currentWeaponIndex].SetCurrentUsedBullet(weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet +weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets);
-            weaponDataSO.Weapons[currentWeaponIndex].SetCurrentInMagBullet(0);
-        }
-        isReloading=false;
-        spawnedWeapons[currentWeaponIndex].GetWeaponAnimController().SetBool("isReloading", isReloading);
-        spawnedWeapons[currentWeaponIndex].GetWeaponAnimController().SetBool("isEmpty", false);
-        GameService.Instance.UIService.GetWeaponUIController().UpdateCurrentBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet);
-        GameService.Instance.UIService.GetWeaponUIController().UpdateTotalBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets);
-        GameService.Instance.SoundService.StopSpecialSound();
-        GameService.Instance.SoundService.PlaySFX(Sound.RELOAD_COMPLETE);
     }
 
     public void FlipCurrentWeapon(float angle)

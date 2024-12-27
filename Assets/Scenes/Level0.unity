@@ -1880,7 +1880,7 @@ MonoBehaviour:
   - soundName: 2
     soundClip: {fileID: 8300000, guid: 0c621901caf7443bb9dae7bb788aff88, type: 3}
   - soundName: 3
-    soundClip: {fileID: 8300000, guid: c73122c48792c4b428ea4b07288eb0bd, type: 3}
+    soundClip: {fileID: 8300000, guid: 2aa8b0c5c7e3a44c3a281481c92baa8e, type: 3}
   - soundName: 4
     soundClip: {fileID: 8300000, guid: 46b70a75d62459a4fab909c0af0fdef1, type: 3}
   - soundName: 5
@@ -2769,7 +2769,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 0.562
   m_Pitch: -0.91
   Loop: 1

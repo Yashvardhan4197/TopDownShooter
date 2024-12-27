@@ -12,30 +12,6 @@ public class LevelUIController
         this.levelUIView.SetController(this);
     }
 
-    public void OpenLevelUISection()
-    {
-        levelUIView.gameObject.SetActive(true);
-        RefreshLevelButtonStatus();
-    }
-
-    public void CloseLevelUISection()
-    {
-        levelUIView.gameObject.SetActive(false);
-    }
-
-    //Call this to refresh all level status
-    public void RefreshLevelButtonStatus()
-    {
-        List<LevelButtonCollection> levelButtonCollection = levelUIView.GetLevelButtonCollection();
-        if (PlayerPrefs.GetInt("level" + 1, -1) == -1)
-        {
-            ResetLevelButtonData();
-            return;
-        }
-        SetLevelButtonStatus(levelButtonCollection);
-
-    }
-
     private void SetLevelButtonStatus(List<LevelButtonCollection> levelButtonCollection)
     {
         for (int i = 0; i < levelButtonCollection.Count; i++)
@@ -65,7 +41,7 @@ public class LevelUIController
     private void ResetLevelButtonData()
     {
         List<LevelButtonCollection> levelButtonCollection = levelUIView.GetLevelButtonCollection();
-        for (int i=0;i<levelButtonCollection.Count;i++)
+        for (int i = 0; i < levelButtonCollection.Count; i++)
         {
             if (i == 0)
             {
@@ -79,6 +55,29 @@ public class LevelUIController
         SetLevelButtonStatus(levelButtonCollection);
     }
 
+    public void OpenLevelUISection()
+    {
+        levelUIView.gameObject.SetActive(true);
+        RefreshLevelButtonStatus();
+    }
+
+    public void CloseLevelUISection()
+    {
+        levelUIView.gameObject.SetActive(false);
+    }
+
+    //Call this to refresh all level status
+    public void RefreshLevelButtonStatus()
+    {
+        List<LevelButtonCollection> levelButtonCollection = levelUIView.GetLevelButtonCollection();
+        if (PlayerPrefs.GetInt("level" + 1, -1) == -1)
+        {
+            ResetLevelButtonData();
+            return;
+        }
+        SetLevelButtonStatus(levelButtonCollection);
+
+    }
 
     //call this to set the level as completed
     public void SetLevelStatusCompleted(int level)

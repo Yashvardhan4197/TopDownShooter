@@ -1,5 +1,4 @@
 
-using System;
 using UnityEngine;
 
 
@@ -18,6 +17,7 @@ public class WeaponView : MonoBehaviour
         WeaponMove();
         ChooseWeapon();
         ReloadWeapon();
+        weaponController?.Update();
     }
 
     private void ReloadWeapon()
@@ -64,8 +64,6 @@ public class WeaponView : MonoBehaviour
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
         transform.eulerAngles = new Vector3(0, 0, angle);
         weaponController.FlipCurrentWeapon(angle);
-        //changes player direction
-        //weaponController.SetPlayerDirection(angle);
     }
 
 

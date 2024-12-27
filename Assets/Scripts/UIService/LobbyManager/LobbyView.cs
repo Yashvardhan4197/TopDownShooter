@@ -18,14 +18,14 @@ public class LobbyView:MonoBehaviour
         exitButton.onClick.AddListener(OnExitButtonClicked);
     }
 
-    public void OnExitButtonClicked()
-    {
-        lobbyController.OnExitButtonClicked();
-    }
-
     private void OnStartButtonClicked()
     {
         lobbyController.OnStartButtonClicked();
+    }
+
+    private void OnExitButtonClicked()
+    {
+        lobbyController.OnExitButtonClicked();
     }
 
 }

@@ -34,6 +34,14 @@ public class InGameUIView : MonoBehaviour
         NextLevelButton.onClick.AddListener(OpenNextLevel);
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyUp(KeyCode.Escape))
+        {
+            inGameUIController?.TogglePause();
+        }
+    }
+
     private void OnExitToLobbyButtonClicked()
     {
         inGameUIController.ExitToLobby();

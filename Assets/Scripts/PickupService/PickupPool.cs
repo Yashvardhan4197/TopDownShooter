@@ -14,6 +14,15 @@ public class PickupPool
         GameService.Instance.StartGameAction += OnGameStart;
     }
 
+    private PickupController CreatePooledItem()
+    {
+        PooledItem item = new PooledItem();
+        item.pickupController = new PickupController(this.pickupPrefab, pickupDataSO);
+        item.isUsed = true;
+        pooledItems.Add(item);
+        return item.pickupController;
+    }
+
     public PickupController GetPooledItem()
     {
         PooledItem item = pooledItems.Find(item => item.isUsed == false);
@@ -23,15 +32,6 @@ public class PickupPool
             return item.pickupController;
         }
         return CreatePooledItem();
-    }
-
-    private PickupController CreatePooledItem()
-    {
-        PooledItem item = new PooledItem();
-        item.pickupController=new PickupController(this.pickupPrefab,pickupDataSO);
-        item.isUsed = true;
-        pooledItems.Add(item);
-        return item.pickupController;
     }
 
     public void ReturnToPool(PickupController pickupController)

@@ -191,6 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyAnimator: {fileID: 2837504691864270642}
   circleCollider: {fileID: 2836157259755955182}
+  spriteRenderer: {fileID: 6513625583729157379}
 --- !u!61 &1278793679991325754
 BoxCollider2D:
   m_ObjectHideFlags: 0

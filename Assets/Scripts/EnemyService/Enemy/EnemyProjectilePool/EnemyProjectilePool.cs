@@ -7,11 +7,21 @@ public class EnemyProjectilePool
     private List<PooledItem> pooledItems = new List<PooledItem>();
     private EnemyProjectileView enemyProjectilePrefab;
 
+    private EnemyProjectileView CreatePooledItem()
+    {
+        PooledItem item = new PooledItem();
+        item.enemyProjectileView = Object.Instantiate(enemyProjectilePrefab);
+        item.isUsed = true;
+        pooledItems.Add(item);
+        return item.enemyProjectileView;
+    }
+
     public EnemyProjectilePool(EnemyProjectileView enemyProjectilePrefab)
     {
         this.enemyProjectilePrefab = enemyProjectilePrefab;
         GameService.Instance.StartGameAction += OnGameStart;
     }
+
     public EnemyProjectileView GetPooledItem()
     {
         PooledItem item = pooledItems.Find(item => item.isUsed == false);
@@ -21,15 +31,6 @@ public class EnemyProjectilePool
             return item.enemyProjectileView;
         }
         return CreatePooledItem();
-    }
-
-    private EnemyProjectileView CreatePooledItem()
-    {
-        PooledItem item = new PooledItem();
-        item.enemyProjectileView = Object.Instantiate(enemyProjectilePrefab);
-        item.isUsed = true;
-        pooledItems.Add(item);
-        return item.enemyProjectileView;
     }
 
     public void ReturnToPool(EnemyProjectileView enemyProjectileView)
@@ -49,7 +50,6 @@ public class EnemyProjectilePool
             ReturnToPool(item.enemyProjectileView);
         }
     }
-
 
     public class PooledItem
     {

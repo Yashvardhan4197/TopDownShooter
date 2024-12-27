@@ -38,6 +38,7 @@ public class InGameUIController
             }
         }
         GameService.Instance.SoundService.PlaySFX(Sound.BUTTON_CLICK);
+
     }
 
 
@@ -45,12 +46,12 @@ public class InGameUIController
     {
         Time.timeScale = 1f;
         inGameUIView.GetPauseMenu().gameObject.SetActive(false);
+        GameService.Instance.PlayerService.GetPlayerController().TogglePause(false);
         isPaused = false;
     }
 
     public void RestartGame()
     {
-        //fix later
         GameService.Instance.StartGameAction?.Invoke();
         GameService.Instance.LevelService.ReloadLevel();
     }
@@ -65,6 +66,7 @@ public class InGameUIController
     {
         Time.timeScale = 0f;
         inGameUIView.GetPauseMenu().gameObject.SetActive(true);
+        GameService.Instance.PlayerService.GetPlayerController().TogglePause(true);
         isPaused = true;
     }
 
@@ -75,6 +77,8 @@ public class InGameUIController
         GameService.Instance.SoundService.PlaySFX(Sound.GAME_WON);
         isLevelDone = true;
         Time.timeScale = 0f;
+        GameService.Instance.SoundService.PlaySpecialSound(Sound.NONE);
+        GameService.Instance.SoundService.StopSpecialSound();
     }
 
     public void CloseGameWinScreen()
@@ -89,6 +93,8 @@ public class InGameUIController
         isLevelDone = true;
         Time.timeScale = 0f;
         GameService.Instance.SoundService.PlaySFX(Sound.GAME_LOST);
+        GameService.Instance.SoundService.PlaySpecialSound(Sound.NONE);
+        GameService.Instance.SoundService.StopSpecialSound();
     }
 
     public void CloseGameLostScreen()

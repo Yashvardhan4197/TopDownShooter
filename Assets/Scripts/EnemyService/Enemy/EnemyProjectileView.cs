@@ -8,8 +8,28 @@ public class EnemyProjectileView: MonoBehaviour
     [SerializeField] int lifeTime;
     private Vector2 direction;
     private float damage;
-    //private Vector3 lastPlayerPos;
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 3)
+        {
+            GameService.Instance.PlayerService.GetPlayerController().TakeDamage(damage);
+            GameService.Instance.EnemyProjectilePool.ReturnToPool(this);
+            this.gameObject.SetActive(false);
+        }
+        else if (collision.gameObject.layer == 8)
+        {
+            DestroyPorjectile();
+        }
+    }
+
+    private void DestroyPorjectile()
+    {
+        GameService.Instance.EnemyProjectilePool.ReturnToPool(this);
+        CancelInvoke(nameof(DestroyPorjectile));
+        this.gameObject.SetActive(false);
+
+    }
 
     public void SetDamage(float damage)
     {
@@ -28,26 +48,4 @@ public class EnemyProjectileView: MonoBehaviour
         rb2D.velocity = direction * speed;
         Invoke(nameof(DestroyPorjectile), lifeTime);
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.layer==3) 
-        {
-            GameService.Instance.PlayerService.GetPlayerController().TakeDamage(damage);
-            GameService.Instance.EnemyProjectilePool.ReturnToPool(this);
-            this.gameObject.SetActive(false);
-        }else if(collision.gameObject.layer==8)
-        {
-            DestroyPorjectile();
-        }
-    }
-
-    private void DestroyPorjectile()
-    {
-        GameService.Instance.EnemyProjectilePool.ReturnToPool(this);
-        CancelInvoke(nameof(DestroyPorjectile));
-        this.gameObject.SetActive(false);
-        
-    }
-
 }
