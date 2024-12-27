@@ -15,7 +15,7 @@ public class EnemyController
     private Vector3 randomMovementOffset;
     private int currentSetEnemy;
     private EnemyService enemyService;
-    public EnemyController(EnemyView enemyView,EnemyDataSO enemyDataSO,Transform playerTransform,Transform EnemyContainerParent,EnemyPool enemyPool,EnemyService enemyService)
+    public EnemyController(EnemyView enemyView,EnemyDataSO enemyDataSO,Transform playerTransform,Transform EnemyContainerParent,EnemyPool enemyPool)
     {
         this.enemyView=Object.Instantiate(enemyView);
         this.enemyView.transform.SetParent(EnemyContainerParent);
@@ -24,11 +24,11 @@ public class EnemyController
         this.enemyDataSO=enemyDataSO;
         this.enemyPool= enemyPool;
         currentSetEnemy = -1;
-        this.enemyService= enemyService;
+        //this.enemyService= enemyService;
     }
 
 
-    public void ActivateView()
+    public void ActivateView(EnemyService enemyService)
     {
         enemyView.gameObject.SetActive(true);
         isAttacking = false;
@@ -39,6 +39,7 @@ public class EnemyController
         health = enemyDataSO.EnemyCollections[currentSetEnemy].Health;
         enemyView.GetAnimator().SetBool("isDead", isDead);
         enemyView.GetCircleCollider().radius = enemyDataSO.EnemyCollections[currentSetEnemy].AttackRadius;
+        this.enemyService = enemyService;
     }
 
     private void RandomizeEnemy()

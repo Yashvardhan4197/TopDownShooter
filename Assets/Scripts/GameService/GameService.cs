@@ -30,11 +30,14 @@ public class GameService : MonoBehaviour
     [SerializeField] WeaponUIView weaponUIView;
     [SerializeField] EnemyProjectileView enemyProjectilePrefab;
     [SerializeField] PickupView pickupPrefab;
+    [SerializeField] EnemyView enemyPrefab;
     //Data
     [SerializeField] PlayerDataSO playerDataSO;
     [SerializeField] WeaponDataSO weaponDataSO;
     [SerializeField] PickupDataSO pickupDataSO;
+    [SerializeField] EnemyDataSO enemyDataSO;
     [SerializeField] float pickupProbabilityRate;
+    [SerializeField] Transform enemyContainer;
     //Services
     private PlayerService playerService;
     private WeaponService weaponService;
@@ -50,13 +53,16 @@ public class GameService : MonoBehaviour
     public UnityAction StartGameAction;
     //Public Pools
     private EnemyProjectilePool enemyProjectilePool;   
+    private EnemyPool enemyPool;
     public EnemyProjectilePool EnemyProjectilePool { get { return enemyProjectilePool; } }
+    public EnemyPool EnemyPool { get { return  enemyPool; } }
 
     private void Init()
     {
         playerService = new PlayerService(playerView,playerDataSO);
         weaponService = new WeaponService(weaponView,weaponDataSO);
         enemyProjectilePool = new EnemyProjectilePool(enemyProjectilePrefab);
+        enemyPool = new EnemyPool(enemyPrefab, enemyDataSO, enemyContainer, playerView.transform);
         pickupService = new PickupService(pickupDataSO, pickupPrefab, pickupProbabilityRate);
         uIService = new UIService(lobbyView,levelUIView,inGameUIView,playerUIView,weaponUIView);
         levelService = new LevelService();

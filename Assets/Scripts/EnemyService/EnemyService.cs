@@ -8,11 +8,11 @@ public class EnemyService : MonoBehaviour
     [SerializeField] List<EnemySpwanPointData> enemySpwanPointDatas = new List<EnemySpwanPointData>();
     [SerializeField] BoxCollider2D spawnTrigger;
     [SerializeField] int spawnTime;
-    [SerializeField] EnemyView enemyPrefab;
-    [SerializeField] Transform enemyContainerParent;
-    [SerializeField] EnemyDataSO enemyDataSO;
+    //[SerializeField] EnemyView enemyPrefab;
+    //[SerializeField] Transform enemyContainerParent;
+    //[SerializeField] EnemyDataSO enemyDataSO;
     [SerializeField] GameObject[] DoorCollection;
-    private EnemyPool enemyPool;
+    //private EnemyPool enemyPool;
     private bool isSpawning;
     private float timer;
     public List<EnemySpwanPointData> EnemySpwanPointDatas { get { return enemySpwanPointDatas; } }
@@ -28,7 +28,7 @@ public class EnemyService : MonoBehaviour
     {
         //GameService.Instance.StartGameAction += OnGameStart;
         await Task.Delay(2 * 1000);
-        enemyPool = new EnemyPool(enemyPrefab, enemyDataSO, enemyContainerParent, GameService.Instance.PlayerService.GetPlayerController().GetPlayerTransform(), this);
+        //enemyPool = new EnemyPool(enemyPrefab, enemyDataSO, enemyContainerParent, GameService.Instance.PlayerService.GetPlayerController().GetPlayerTransform(), this);
     }
 
     public void OnGameStart()
@@ -74,11 +74,10 @@ public class EnemyService : MonoBehaviour
         {
             if (enemySpwanPointDatas[i].CurrentlySpawnCount > 0)
             {
-                EnemyController newEnemy = enemyPool.GetPooledItem();
+                EnemyController newEnemy = GameService.Instance.EnemyPool.GetPooledItem();
                 newEnemy.SetSpawnPosition(enemySpwanPointDatas[i].SpawnPosition.position);
-                newEnemy.ActivateView();
+                newEnemy.ActivateView(this);
                 enemySpwanPointDatas[i].SetCurrentlySpawnCount(enemySpwanPointDatas[i].CurrentlySpawnCount - 1);
-                Debug.Log("Enemy Spawned");
             }
         }
     }
