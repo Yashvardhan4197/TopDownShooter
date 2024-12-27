@@ -121,7 +121,7 @@ public class EnemyService : MonoBehaviour
     {
         foreach (var item in DoorCollection)
         {
-            item.gameObject.SetActive(true);
+            item?.gameObject.SetActive(true);
         }
     }
 

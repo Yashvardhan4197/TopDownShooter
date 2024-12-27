@@ -80,7 +80,7 @@ public class PickupController
         {
             GameService.Instance.WeaponService.GetWeaponController().IncreaseAmmo(pickupDataSO.PickupCollections[currentEnemyTypeIndex].AmmoBoost);
         }
-
+        Debug.Log(pickupDataSO.PickupCollections[currentEnemyTypeIndex].PickupType);
 
         ReturnPickup();
     }

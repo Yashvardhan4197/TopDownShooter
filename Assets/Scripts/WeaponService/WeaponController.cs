@@ -121,7 +121,6 @@ public class WeaponController
                     if (damageAbleItem != null)
                     {
                         damageAbleItem.TakeDamage(weaponDataSO.Weapons[currentWeaponIndex].Damage);
-                        Debug.Log("Attacked");
                     }
                     ToggleShootAnimation(true);
                 }
@@ -156,12 +155,16 @@ public class WeaponController
 
     public void ReloadCurrentWeapon()
     {
-        if (weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet < weaponDataSO.Weapons[currentWeaponIndex].MaxUsedBullet && weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets>0)
+        if (currentWeaponIndex!=-1)
         {
-            isReloading = true;
-            spawnedWeapons[currentWeaponIndex].GetWeaponAnimController().SetBool("isReloading", isReloading);
-            StartReloading();
+            if (weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet < weaponDataSO.Weapons[currentWeaponIndex].MaxUsedBullet && weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets > 0)
+            {
+                isReloading = true;
+                spawnedWeapons[currentWeaponIndex].GetWeaponAnimController().SetBool("isReloading", isReloading);
+                StartReloading();
+            }
         }
+
     }
 
     private async void StartReloading()
@@ -242,21 +245,33 @@ public class WeaponController
 
     public void IncreaseAmmo(int ammo)
     {
-        for (int i= 0;i < weaponDataSO.Weapons.Count;i++)
+        for (int i = 0; i < weaponDataSO.Weapons.Count; i++)
         {
-            if (weaponDataSO.Weapons[i].CurrentInMagBullets < weaponDataSO.Weapons[i].MaxInMagBullets)
+            int currentAmmoToAdd = ammo;
+            int neededBulletsUsed = weaponDataSO.Weapons[i].MaxUsedBullet - weaponDataSO.Weapons[i].CurrentUsedBullet;
+            if (currentAmmoToAdd <= neededBulletsUsed)
             {
-                int temp = ammo + weaponDataSO.Weapons[i].CurrentInMagBullets;
-                if(temp>= weaponDataSO.Weapons[i].MaxInMagBullets)
-                {
-                    temp = weaponDataSO.Weapons[i].MaxInMagBullets;
-                }
-                weaponDataSO.Weapons[i].SetCurrentInMagBullet(temp);
+                weaponDataSO.Weapons[i].SetCurrentUsedBullet(weaponDataSO.Weapons[i].CurrentUsedBullet + currentAmmoToAdd);
             }
-        }
-        if (currentWeaponIndex != -1)
-        {
-            GameService.Instance.UIService.GetWeaponUIController().UpdateTotalBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets);
+            else
+            {
+                weaponDataSO.Weapons[i].SetCurrentUsedBullet(weaponDataSO.Weapons[i].MaxUsedBullet);
+                currentAmmoToAdd -= neededBulletsUsed;
+                neededBulletsUsed = weaponDataSO.Weapons[i].MaxInMagBullets - weaponDataSO.Weapons[i].CurrentInMagBullets;
+                if (currentAmmoToAdd <= neededBulletsUsed)
+                {
+                    weaponDataSO.Weapons[i].SetCurrentInMagBullet(weaponDataSO.Weapons[i].CurrentInMagBullets + currentAmmoToAdd);
+                }
+                else
+                {
+                    weaponDataSO.Weapons[i].SetCurrentInMagBullet(weaponDataSO.Weapons[i].MaxInMagBullets);
+                }
+            }
+            if (currentWeaponIndex != -1)
+            {
+                GameService.Instance.UIService.GetWeaponUIController().UpdateTotalBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets);
+                GameService.Instance.UIService.GetWeaponUIController().UpdateCurrentBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet);
+            }
         }
     }
 

@@ -24,7 +24,7 @@ public class GameWinManager : MonoBehaviour
     {
         GameService.Instance.UIService.GetInGameUIController().OpenGameWinScreen();
         GameService.Instance.UIService.GetLevelUIController().SetLevelStatusCompleted(GameService.Instance.LevelService.CurrentLevel);
-        gameWinDoor.SetActive(false);
+        gameWinDoor?.SetActive(false);
     }
 
 }

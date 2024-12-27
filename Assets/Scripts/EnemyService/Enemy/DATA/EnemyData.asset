@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: EnemyData
   m_EditorClassIdentifier: 
   enemyCollections:
-  - health: 100
-    damage: 10
+  - health: 150
+    damage: 25
     movementSpeed: 0.5
-    attackDelay: 1
+    attackDelay: 3
     enemyType: 0
     animatorController: {fileID: 9100000, guid: 3bc360832db7fc745afca65f4282fb89, type: 2}
     attackRadius: 0.6
   - health: 50
-    damage: 5
-    movementSpeed: 0.7
+    damage: 15
+    movementSpeed: 2
     attackDelay: 1
     enemyType: 1
     animatorController: {fileID: 9100000, guid: afb41ceaa8784f24d855ac2a027f0768, type: 2}

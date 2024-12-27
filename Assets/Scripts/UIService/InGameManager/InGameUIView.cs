@@ -31,6 +31,7 @@ public class InGameUIView : MonoBehaviour
 
         RestartButtonGameCompletePopUp.onClick.AddListener(OnRestartButtonClicked);
         ExitToLobbyGameWonPopUp.onClick.AddListener(OnExitToLobbyButtonClicked);
+        NextLevelButton.onClick.AddListener(OpenNextLevel);
     }
 
     private void OnExitToLobbyButtonClicked()
@@ -55,7 +56,7 @@ public class InGameUIView : MonoBehaviour
 
     public void OpenNextLevel()
     {
-
+        inGameUIController?.SetNextLevel();
     }
 
 

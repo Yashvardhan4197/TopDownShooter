@@ -1,6 +1,4 @@
 ﻿
-
-
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +19,7 @@ public class WeaponUIController
         currentWeaponBullets = 0;
         currentWeaponTotalBullets = 0;
         UpdateBulletsOnView();
+        DeactivateText();
     }
 
 
@@ -39,7 +38,19 @@ public class WeaponUIController
     private void UpdateBulletsOnView()
     {
         weaponUIView.GetCurrentWeaponBullets().text=currentWeaponBullets.ToString()+"/"+currentWeaponTotalBullets.ToString();
+        
     }
+
+    public void ActivateText()
+    {
+        weaponUIView.GetCurrentWeaponBullets().gameObject.SetActive(true);
+    }
+
+    public void DeactivateText()
+    {
+        weaponUIView.GetCurrentWeaponBullets().gameObject.SetActive(false);
+    }
+
 
     public void SetCurrentWeapon(int index)
     {
@@ -52,12 +63,13 @@ public class WeaponUIController
         if(index!=-1)
         {
             collection[index].color = Color.gray;
+            ActivateText();
         }
         else
         {
             currentWeaponBullets = 0;
             currentWeaponTotalBullets = 0;
-            UpdateBulletsOnView();
+            DeactivateText();
         }
     }
 

@@ -98,7 +98,7 @@ public class InGameUIController
         if(GameService.Instance.LevelService.CurrentLevel+1< SceneManager.sceneCountInBuildSettings)
         {
             inGameUIView.GetNextLevelButton().gameObject.SetActive(true);
-            inGameUIView.GetNextLevelButton().onClick.AddListener(SetNextLevel);
+            //inGameUIView.GetNextLevelButton().onClick(SetNextLevel);
         }
         else
         {
@@ -106,7 +106,7 @@ public class InGameUIController
         }
     }
 
-    private void SetNextLevel()
+    public void SetNextLevel()
     {
         GameService.Instance.LevelService.LoadLevel(GameService.Instance.LevelService.CurrentLevel + 1);
     }

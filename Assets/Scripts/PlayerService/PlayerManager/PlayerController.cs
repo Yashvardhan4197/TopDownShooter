@@ -49,7 +49,7 @@ public class PlayerController
     {
         if (isShieldActive == false)
         {
-            currentHealth -= damage;
+            currentHealth -= Mathf.Abs(damage);
             GameService.Instance.UIService.GetPlayerUIController().UpdateHealthBar(currentHealth);
             if (currentHealth <= 0)
             {

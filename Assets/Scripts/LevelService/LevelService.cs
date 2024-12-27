@@ -16,14 +16,16 @@ public class LevelService
         if(currentLevel != 0) 
         {
             SceneManager.UnloadSceneAsync(SceneManager.GetSceneByBuildIndex(currentLevel));
-            SceneManager.LoadScene(currentLevel, LoadSceneMode.Additive);
+            SceneManager.LoadScene(currentLevel,LoadSceneMode.Additive);
             GameService.Instance.StartGameAction?.Invoke();
+            Debug.Log("CurrentLevel: " + currentLevel);
         }
     }
 
 
     public void LoadLevel(int levelNumber)
     {
+        Debug.Log("CurrentLevel: " + currentLevel + " level to change: " + levelNumber);
         if (currentLevel != 0)
         {
             SceneManager.UnloadSceneAsync(SceneManager.GetSceneByBuildIndex(currentLevel));

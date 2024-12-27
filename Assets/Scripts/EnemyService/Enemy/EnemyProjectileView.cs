@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using TMPro;
+﻿
 using UnityEngine;
 
 public class EnemyProjectileView: MonoBehaviour
@@ -23,29 +22,11 @@ public class EnemyProjectileView: MonoBehaviour
         rb2D.velocity = Vector2.zero;
         this.transform.position= position;
         Transform playerTransform = GameService.Instance.PlayerService.GetPlayerController().GetPlayerTransform();
-        if(playerTransform == null )
-        {
-            Debug.Log("tfff");
-        }
         direction = (playerTransform.transform.position - transform.position).normalized;
-        //this.lastPlayerPos = lastPlayerPos;
-        // Rotate the projectile to face the direction
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle-90);
         rb2D.velocity = direction * speed;
         Invoke(nameof(DestroyPorjectile), lifeTime);
-    }
-
-    private void Update()
-    {
-       // Vector2 currentPosition = transform.position;
-        //Vector2 direction = (direction - currentPosition).normalized; // Calculate direction
-       //transform.position=Vector3.MoveTowards(currentPosition,lastPlayerPos,speed* Time.deltaTime);
-        //if (Vector2.Distance(currentPosition, lastPlayerPos) < 0.1f)
-        //{
-        //    GameService.Instance.EnemyProjectilePool.ReturnToPool(this);
-        //    this.gameObject.SetActive(false);   
-       // }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
