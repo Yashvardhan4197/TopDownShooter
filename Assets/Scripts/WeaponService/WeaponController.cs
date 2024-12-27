@@ -89,11 +89,12 @@ public class WeaponController
                     GameService.Instance.UIService.GetWeaponUIController().UpdateTotalBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets);
                 }
                 nextTimetoFire = 0;
+                GameService.Instance.SoundService.PlaySFX(Sound.WEAPON_CHANGE);
             }
         }
         else
         {
-            //play deny sound cause already reloading
+            GameService.Instance.SoundService.PlaySFX(Sound.DENY);
         }
     }
 
@@ -116,6 +117,7 @@ public class WeaponController
                     InstantiateBulletTracer(ray2D, hit2D);
                     weaponDataSO.Weapons[currentWeaponIndex].SetCurrentUsedBullet(weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet - 1);
                     GameService.Instance.UIService.GetWeaponUIController().UpdateCurrentBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet);
+                    GameService.Instance.SoundService.PlaySFX(weaponDataSO.Weapons[currentWeaponIndex].ShootSound);
                     IDamageAble damageAbleItem = hit2D.transform?.GetComponent<IDamageAble>();
 
                     if (damageAbleItem != null)
@@ -161,6 +163,7 @@ public class WeaponController
             {
                 isReloading = true;
                 spawnedWeapons[currentWeaponIndex].GetWeaponAnimController().SetBool("isReloading", isReloading);
+                GameService.Instance.SoundService.PlaySpecialSound(Sound.RELOAD);
                 StartReloading();
             }
         }
@@ -186,6 +189,8 @@ public class WeaponController
         spawnedWeapons[currentWeaponIndex].GetWeaponAnimController().SetBool("isEmpty", false);
         GameService.Instance.UIService.GetWeaponUIController().UpdateCurrentBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentUsedBullet);
         GameService.Instance.UIService.GetWeaponUIController().UpdateTotalBullets(weaponDataSO.Weapons[currentWeaponIndex].CurrentInMagBullets);
+        GameService.Instance.SoundService.StopSpecialSound();
+        GameService.Instance.SoundService.PlaySFX(Sound.RELOAD_COMPLETE);
     }
 
     public void FlipCurrentWeapon(float angle)

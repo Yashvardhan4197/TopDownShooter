@@ -38,17 +38,23 @@ public class GameService : MonoBehaviour
     [SerializeField] EnemyDataSO enemyDataSO;
     [SerializeField] float pickupProbabilityRate;
     [SerializeField] Transform enemyContainer;
+    [SerializeField] AudioSource lFXAudioSource;
+    [SerializeField] AudioSource sFXAudioSource;
+    [SerializeField] AudioSource bgAudioSource;
+    [SerializeField] SoundType[] soundTypes;
     //Services
     private PlayerService playerService;
     private WeaponService weaponService;
     private PickupService pickupService;
     private LevelService levelService;
     private UIService uIService;
+    private SoundService soundService;
     public PlayerService PlayerService { get { return playerService; } }
     public WeaponService WeaponService { get { return weaponService; } }
     public LevelService LevelService { get { return levelService; } }
     public UIService UIService { get { return uIService; } }
     public PickupService PickupService { get { return pickupService; } }
+    public SoundService SoundService { get { return soundService; } }
     //ACTIONS
     public UnityAction StartGameAction;
     //Public Pools
@@ -66,6 +72,8 @@ public class GameService : MonoBehaviour
         pickupService = new PickupService(pickupDataSO, pickupPrefab, pickupProbabilityRate);
         uIService = new UIService(lobbyView,levelUIView,inGameUIView,playerUIView,weaponUIView);
         levelService = new LevelService();
+        soundService = new SoundService(bgAudioSource, sFXAudioSource, lFXAudioSource, soundTypes);
         uIService.GetLobbyController().OpenLobby();
+        soundService.PlayBackGroundAudio(Sound.BACKGROUND_MUSIC);
     }
 }

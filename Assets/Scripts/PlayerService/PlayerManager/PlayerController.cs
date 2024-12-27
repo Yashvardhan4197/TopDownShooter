@@ -51,6 +51,7 @@ public class PlayerController
         {
             currentHealth -= Mathf.Abs(damage);
             GameService.Instance.UIService.GetPlayerUIController().UpdateHealthBar(currentHealth);
+            GameService.Instance.SoundService.PlaySFX(Sound.PLAYER_DAMAGE);
             if (currentHealth <= 0)
             {
                 GameService.Instance.UIService.GetInGameUIController().OpenGameLostScreen();

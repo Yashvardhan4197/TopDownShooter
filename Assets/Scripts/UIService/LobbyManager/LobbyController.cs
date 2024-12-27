@@ -16,6 +16,7 @@ public class LobbyController
     {
         lobbyView.gameObject.SetActive(true);
         GameService.Instance.UIService.GetLevelUIController().CloseLevelUISection();
+        GameService.Instance.SoundService.PlaySpecialSound(Sound.NONE);
         Time.timeScale = 0f;
     }
 
@@ -29,10 +30,12 @@ public class LobbyController
     public void OnStartButtonClicked()
     {
         GameService.Instance.UIService.GetLevelUIController().OpenLevelUISection();
+        GameService.Instance.SoundService.PlaySFX(Sound.BUTTON_CLICK);
     }
 
     public void OnExitButtonClicked()
     {
         Application.Quit();
+        GameService.Instance.SoundService.PlaySFX(Sound.BUTTON_CLICK);
     }
 }

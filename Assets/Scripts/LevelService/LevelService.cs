@@ -1,5 +1,4 @@
 ﻿
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelService
@@ -18,14 +17,12 @@ public class LevelService
             SceneManager.UnloadSceneAsync(SceneManager.GetSceneByBuildIndex(currentLevel));
             SceneManager.LoadScene(currentLevel,LoadSceneMode.Additive);
             GameService.Instance.StartGameAction?.Invoke();
-            Debug.Log("CurrentLevel: " + currentLevel);
         }
     }
 
 
     public void LoadLevel(int levelNumber)
     {
-        Debug.Log("CurrentLevel: " + currentLevel + " level to change: " + levelNumber);
         if (currentLevel != 0)
         {
             SceneManager.UnloadSceneAsync(SceneManager.GetSceneByBuildIndex(currentLevel));
@@ -54,7 +51,6 @@ public class LevelService
     {
         SceneManager.UnloadSceneAsync(SceneManager.GetSceneByBuildIndex(currentLevel));
         currentLevel = 0;
-        //SceneManager.LoadScene(currentLevel, LoadSceneMode.Additive);
     }
 
 }

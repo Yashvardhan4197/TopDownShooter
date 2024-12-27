@@ -1,5 +1,4 @@
 ﻿
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -29,13 +28,16 @@ public class InGameUIController
         {
             if (isPaused)
             {
+                GameService.Instance.SoundService.SetPauseSpecialAudioSource(false);
                 ResumeGame();
             }
             else
             {
+                GameService.Instance.SoundService.SetPauseSpecialAudioSource(true);
                 OpenPauseMenu();
             }
         }
+        GameService.Instance.SoundService.PlaySFX(Sound.BUTTON_CLICK);
     }
 
 
@@ -70,6 +72,7 @@ public class InGameUIController
     public void OpenGameWinScreen()
     {
         inGameUIView.GetWinScreenMenu().gameObject.SetActive(true);
+        GameService.Instance.SoundService.PlaySFX(Sound.GAME_WON);
         isLevelDone = true;
         Time.timeScale = 0f;
     }
@@ -85,6 +88,7 @@ public class InGameUIController
         inGameUIView.GetLostScreenMenu().gameObject.SetActive(true);
         isLevelDone = true;
         Time.timeScale = 0f;
+        GameService.Instance.SoundService.PlaySFX(Sound.GAME_LOST);
     }
 
     public void CloseGameLostScreen()
@@ -98,7 +102,6 @@ public class InGameUIController
         if(GameService.Instance.LevelService.CurrentLevel+1< SceneManager.sceneCountInBuildSettings)
         {
             inGameUIView.GetNextLevelButton().gameObject.SetActive(true);
-            //inGameUIView.GetNextLevelButton().onClick(SetNextLevel);
         }
         else
         {

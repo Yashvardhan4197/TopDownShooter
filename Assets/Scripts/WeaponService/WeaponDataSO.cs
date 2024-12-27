@@ -20,6 +20,7 @@ public class WeaponDataSO: ScriptableObject
         [SerializeField] int maxRange;
         [SerializeField] WeaponBody weaponBody;
         [SerializeField] TrailRenderer bulletTrail;
+        [SerializeField] Sound shootSound;
         public string WeaponName { get { return weaponName; } }
         public float FireRate { get {  return fireRate; } }
         public int MaxUsedBullet { get {  return maxUsedBullet; } }
@@ -31,6 +32,9 @@ public class WeaponDataSO: ScriptableObject
         public WeaponBody WeaponBody { get { return weaponBody; } }
         public TrailRenderer BulletTrail { get { return bulletTrail; } }
         public int ReloadTimeInSeconds { get { return reloadTimeInSeconds; } }
+
+        public Sound ShootSound { get { return shootSound; } }
+
 
         public void SetCurrentUsedBullet(int currentUsedBullet)
         {

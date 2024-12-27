@@ -111,6 +111,7 @@ public class LevelUIController
 
     public void OnLevelButtonClicked(int levelID)
     {
+        GameService.Instance.SoundService.PlaySFX(Sound.BUTTON_CLICK);
         GameService.Instance.LevelService.LoadLevel(levelID);
     }
 
