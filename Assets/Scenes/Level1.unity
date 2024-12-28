@@ -23082,17 +23082,25 @@ PrefabInstance:
     - target: {fileID: 8140638738490142182, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
       propertyPath: enemySpwanPointDatas.Array.data[1].SpawnPosition
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1717672765}
     - target: {fileID: 8140638738490142182, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
       propertyPath: enemySpwanPointDatas.Array.data[2].SpawnPosition
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1717672765}
     - target: {fileID: 8140638738490142182, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
       propertyPath: enemySpwanPointDatas.Array.data[3].SpawnPosition
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8140638738490142182, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
       propertyPath: enemySpwanPointDatas.Array.data[0].totalSpawnCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140638738490142182, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
+      propertyPath: enemySpwanPointDatas.Array.data[1].totalSpawnCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140638738490142182, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
+      propertyPath: enemySpwanPointDatas.Array.data[2].totalSpawnCount
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9149938020972186498, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
@@ -23111,6 +23119,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
+--- !u!4 &1717672765 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 885519251767591241, guid: 133e9dd05d55f724fafcfaa64feae846, type: 3}
+  m_PrefabInstance: {fileID: 1717672764}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1815914205
 PrefabInstance:
   m_ObjectHideFlags: 0

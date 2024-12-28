@@ -79,6 +79,7 @@ public class InGameUIController
         Time.timeScale = 0f;
         GameService.Instance.SoundService.PlaySpecialSound(Sound.NONE);
         GameService.Instance.SoundService.StopSpecialSound();
+        GameService.Instance.PlayerService.GetPlayerController().TogglePause(true);
     }
 
     public void CloseGameWinScreen()
@@ -95,6 +96,7 @@ public class InGameUIController
         GameService.Instance.SoundService.PlaySFX(Sound.GAME_LOST);
         GameService.Instance.SoundService.PlaySpecialSound(Sound.NONE);
         GameService.Instance.SoundService.StopSpecialSound();
+        GameService.Instance.PlayerService.GetPlayerController().TogglePause(true);
     }
 
     public void CloseGameLostScreen()
